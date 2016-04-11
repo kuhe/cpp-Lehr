@@ -1,4 +1,10 @@
 #include "test_pointers.h"
+#include <map>
+#include <unordered_map>
+
+using std::unordered_map;
+using std::map;
+
 
 int test_pointers() {
 
