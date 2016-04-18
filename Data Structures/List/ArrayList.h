@@ -11,6 +11,7 @@ namespace Lehr {
     template <typename T>
     class ArrayList : public List<T> {
     public:
+        typedef T value_type;
         size_t size() override;
 
         ArrayList<T>();

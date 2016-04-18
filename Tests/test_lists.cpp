@@ -1,4 +1,5 @@
 #include "test_lists.h"
+#include <type_traits>
 
 using Lehr::LinkedList;
 using Lehr::ArrayList;
@@ -15,10 +16,10 @@ int test_lists() {
            h = "indexTest";
 
     /** pick a list implementation */
-    ArrayList<int> numbers;
-//    ArrayList<string> lln, lln2;
-    LinkedList<string> lln, lln2;
-//    LinkedList<int> numbers;
+//    ArrayList<int> numbers;
+    ArrayList<string> lln, lln2;
+//    LinkedList<string> lln, lln2;
+    LinkedList<int> numbers;
 
     lln.push(c);
     lln.push(d);
@@ -133,6 +134,19 @@ int test_lists() {
 
     console_test(numbers[0], -55555);
     console_test(numbers[numbers.size() - 1], 55555);
+
+
+    using list_type = std::remove_const<decltype(numbers)>::type;
+    list_type list = std::move(numbers);
+
+    std::function<typename list_type::value_type(void)> fn = [&list]() -> list_type::value_type {
+        return list[0];
+    };
+    auto fn2 = [&](int i1, int i2) {
+        return i1 + i2 + fn();
+    };
+
+    console_test(list[0] * 2 + 1 + 2, fn() + fn2(1, 2));
 
     cout << endl;
     return 0;

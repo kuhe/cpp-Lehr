@@ -3,11 +3,13 @@
 
 #include "List.h"
 #include <string>
+using std::function;
 
 namespace Lehr {
     template <typename T>
     class LinkedList : public List<T> {
     public:
+        typedef T value_type;
         size_t size() override;
 
         LinkedList<T>();
@@ -43,6 +45,8 @@ namespace Lehr {
         LinkedList<T>* splice(int before, T& item);
         LinkedList<T>* slice(int index);
         LinkedList<T>* slice(int index, int length);
+        LinkedList<T>* map(function<T(T)> fn);
+        LinkedList<T>* filter(function<bool(T)> fn);
     protected:
         size_t length = 0;
         struct Node {
@@ -302,6 +306,16 @@ namespace Lehr {
         while (this->length > length) {
             pop();
         }
+        return this;
+    }
+    template <typename T>
+    LinkedList<T>* LinkedList<T>::map(function<T(T)> func) {
+        // todo
+        return this;
+    }
+    template <typename T>
+    LinkedList<T>* LinkedList<T>::filter(function<bool(T)> func) {
+        // todo
         return this;
     }
 }
