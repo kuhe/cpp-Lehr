@@ -38,8 +38,8 @@ int main() {
     cout << "Pointer: ";
     int test7 = test_pointers();
 
-    cout << "\nYay! " << to_string(results.score) << " passed. "
-         << to_string(results.failed) << " mysterious failure(s)." << endl;
+    cout << "\nYay! " << (results.score) << " passed. "
+         << (results.failed) << " mysterious failure(s)." << endl;
 
     // cin.get();
 

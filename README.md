@@ -21,6 +21,7 @@ todo:
         Dijkstra and A* on graphs
         more specialty graphs (e.g. BRTree)
         copy-and-swap idiom
+        weak smart pointers
 
     Cleanup
         stack allocation of ArrayList (no constructor call?) results in faulty delete in destructor
@@ -28,6 +29,15 @@ todo:
 
     Horizon
         see 23.2 Container Requirements, refactor to meet requirements
+
+
+Currently implemented:
+
+    LinkedList, ArrayList from virtual List
+    Lehr::Map, Lehr::Set
+    Lehr::Graph
+    Lehr::BinarySearchTree
+    Lehr::UniquePointer, Lehr::SharedPointer
 
 
 ### Code Style Notes
