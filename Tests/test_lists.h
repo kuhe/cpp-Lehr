@@ -11,6 +11,7 @@
 #include "../Data Structures/List/ArrayList.h"
 #include "./test_common.h"
 
+template<typename T, typename R>
 int test_lists();
 
 #endif //CPPREF_TEST_STRUCTURES_H

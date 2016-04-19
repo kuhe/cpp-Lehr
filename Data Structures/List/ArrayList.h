@@ -30,8 +30,6 @@ namespace Lehr {
         void shift(T& into) override;
         using List<T>::operator >>;
         using List<T>::operator <<;
-        T& begin() override;
-        T& end() override;
 
         int index(const T& item) override;
         bool contains(const T& item) override;
@@ -47,12 +45,67 @@ namespace Lehr {
         ArrayList<T>* splice(int before, T& item);
         ArrayList<T>* slice(int index);
         ArrayList<T>* slice(int index, int length);
+        ArrayList<T>* map(function<T(T)> fn);
+        ArrayList<T>* filter(function<bool(T)> fn);
+
+        struct iterator;
+        iterator begin();
+        iterator end();
+        
     protected:
         double resize_scalar = 1.5;
         size_t length = 0;
         T* data = nullptr;
         void resize(size_t n, int start_index = 0);
         size_t data_size = 0;
+        
+    public:
+        struct iterator {
+            friend class ArrayList<T>;
+
+            T& operator ->() {
+                return operator *();
+            }
+            T& operator *() {
+                return _list[index];
+            }
+            bool operator ==(iterator& right) {
+                if (index == end) {
+                    return right.index == end;
+                }
+                return operator *() == *right;
+            }
+            bool operator !=(iterator& right) {
+                return !operator ==(right);
+            }
+            iterator& operator ++() {
+                if (index < _list.length) {
+                    index++;
+                } else {
+                    index = end;
+                }
+                return *this;
+            }
+            iterator& operator --() {
+                if (index == end) {
+                    index = _list.length - 1;
+                } else {
+                    if (index > 0) {
+                        index--;
+                    } else {
+                        index = end;
+                    }
+                }
+                return *this;
+            }
+        protected:
+            iterator(size_t from_index, ArrayList<T>& list): index(from_index), _list(list) {
+
+            }
+            const long int end = -1;
+            long int index;
+            ArrayList<T>& _list;
+        };
     };
 
     template class ArrayList<std::string>;
@@ -144,16 +197,8 @@ namespace Lehr {
         }
     }
     template <typename T>
-    T& ArrayList<T>::begin() {
-        return data[0];
-    }
-    template <typename T>
-    T& ArrayList<T>::end() {
-        return data[length - 1];
-    }
-    template <typename T>
     int ArrayList<T>::index(const T& item) {
-        int index = 0;
+        size_t index = 0;
         T& cursor = this->operator [](index);
         while (index < length) {
             if (this->operator [](index) == item) {
@@ -188,7 +233,7 @@ namespace Lehr {
             data[i] = data[i + offset];
             data[i + offset] = empty;
         }
-        length -= 1 + (to - from);
+        length -= offset;
         return this;
     }
     template <typename T>
@@ -250,6 +295,36 @@ namespace Lehr {
         }
         length -= start_index;
         data = transfer;
+    }
+    template <typename T>
+    ArrayList<T>* ArrayList<T>::map(function<T(T)> func) {
+        for (T& item : *this) {
+            item = func(item);
+        }
+        return this;
+    }
+    template <typename T>
+    ArrayList<T>* ArrayList<T>::filter(function<bool(T)> func) {
+        ArrayList<T> temp;
+        for (T& item : *this) {
+            bool keep = func(item);
+            if (keep) {
+                temp.push(item);
+            }
+        }
+        resize(0);
+        for (auto item : temp) {
+            push(item);
+        }
+        return this;
+    }
+    template <typename T>
+    typename ArrayList<T>::iterator ArrayList<T>::begin() {
+        return iterator(0, *this);
+    }
+    template <typename T>
+    typename ArrayList<T>::iterator ArrayList<T>::end() {
+        return iterator(length, *this);
     }
 }
 

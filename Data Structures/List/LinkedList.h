@@ -28,8 +28,6 @@ namespace Lehr {
         void shift(T& into) override;
         using List<T>::operator >>;
         using List<T>::operator <<;
-        T& begin() override;
-        T& end() override;
 
         int index(const T& item) override;
         bool contains(const T& item) override;
@@ -47,6 +45,11 @@ namespace Lehr {
         LinkedList<T>* slice(int index, int length);
         LinkedList<T>* map(function<T(T)> fn);
         LinkedList<T>* filter(function<bool(T)> fn);
+
+        struct iterator;
+        iterator begin();
+        iterator end();
+
     protected:
         size_t length = 0;
         struct Node {
@@ -64,7 +67,61 @@ namespace Lehr {
         };
         Node* head = nullptr;
         Node* tail = nullptr;
-        Node*node_at(int i);
+        Node* node_at(long int i);
+    public:
+        struct iterator {
+            friend class LinkedList<T>;
+            friend class Node;
+
+            T& operator ->() {
+                return operator *();
+            }
+            T& operator *() {
+                return cursor->item;
+            }
+            bool operator ==(iterator& right) {
+                if (index == end || right.index == end) {
+                    return right.index == index;
+                }
+                return operator *() == *right;
+            }
+            bool operator !=(iterator& right) {
+                return !operator ==(right);
+            }
+            iterator& operator ++() {
+                if (cursor->next != nullptr) {
+                    cursor = cursor->next;
+                    index++;
+                } else {
+                    index = end;
+                }
+                return *this;
+            }
+            iterator& operator --() {
+                if (index == end) {
+                    cursor = _list.tail;
+                } else {
+                    if (index > 0) {
+                        index--;
+                        cursor = _list.node_at(index);
+                    } else {
+                        index = end;
+                    }
+                }
+                return *this;
+            }
+        protected:
+            iterator(Node& node, size_t from_index, LinkedList<T>& list): index(from_index), _list(list) {
+                cursor = &node;
+            }
+            iterator(LinkedList<T>& list): _list(list) {
+                index = end;
+            }
+            const long int end = -1;
+            Node* cursor;
+            long int index;
+            LinkedList<T>& _list;
+        };
     };
 
     template class LinkedList<std::string>;
@@ -115,7 +172,7 @@ namespace Lehr {
     }
 
     template <typename T>
-    typename LinkedList<T>::Node* LinkedList<T>::node_at(int i) {
+    typename LinkedList<T>::Node* LinkedList<T>::node_at(long int i) {
         LinkedList<T>::Node* cursor = this->head;
         while (nullptr != cursor->next && i--) {
             cursor = cursor->next;
@@ -174,7 +231,7 @@ namespace Lehr {
             into = copy;
             delete tail;
             if (length > 1) {
-                LinkedList<T>::Node* new_tail = node_at(length - 2);
+                LinkedList<T>::Node* new_tail = node_at((int)length - 2);
                 new_tail->next = nullptr;
                 tail = new_tail;
             } else if (length == 1) {
@@ -206,14 +263,6 @@ namespace Lehr {
         }
     }
     template <typename T>
-    T& LinkedList<T>::begin() {
-        return head->item;
-    }
-    template <typename T>
-    T& LinkedList<T>::end() {
-        return tail->item;
-    }
-    template <typename T>
     int LinkedList<T>::index(const T& item) {
         Node* cursor = head;
         int index = 0;
@@ -232,20 +281,14 @@ namespace Lehr {
     }
     template <typename T>
     LinkedList<T>* LinkedList<T>::sort() {
-        int middle = length / 2;
+        size_t middle = length / 2;
         LinkedList<T> merge_staging;
         mergesort(0, middle, merge_staging);
         return this;
     }
     template <typename T>
     LinkedList<T>* LinkedList<T>::excise(int at) {
-        if (at > 1) {
-            node_at(at - 1)->next = node_at(at + 1);
-            length--;
-        } else {
-            shift();
-        }
-        return this;
+        return excise(at, at);
     }
     template <typename T>
     LinkedList<T>* LinkedList<T>::excise(int from, int to) {
@@ -310,13 +353,31 @@ namespace Lehr {
     }
     template <typename T>
     LinkedList<T>* LinkedList<T>::map(function<T(T)> func) {
-        // todo
+        for (T& item : *this) {
+            item = func(item);
+        }
         return this;
     }
     template <typename T>
     LinkedList<T>* LinkedList<T>::filter(function<bool(T)> func) {
-        // todo
+        int ix = 0;
+        for (T& item : *this) {
+            bool keep = func(item);
+            if (!keep) {
+                excise(ix);
+                ix--;
+            }
+            ix++;
+        }
         return this;
+    }
+    template <typename T>
+    typename LinkedList<T>::iterator LinkedList<T>::begin() {
+        return iterator(*head, 0, *this);
+    }
+    template <typename T>
+    typename LinkedList<T>::iterator LinkedList<T>::end() {
+        return iterator(*this);
     }
 }
 

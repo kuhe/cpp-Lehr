@@ -16,16 +16,15 @@ templates, and a convenient google search index called "any and all g++ error me
 
 todo:
 
-    Interests
+    Todo
+        move semantics for Lists
         Dijkstra and A* on graphs
-        add range-based-for-loop compatibility to List family
         more specialty graphs (e.g. BRTree)
         copy-and-swap idiom
 
     Cleanup
         stack allocation of ArrayList (no constructor call?) results in faulty delete in destructor
         harden (hash) sets
-        Implement TreeSet<T> (?) Maybe I already did with BSTree<T>, hah.
 
     Horizon
         see 23.2 Container Requirements, refactor to meet requirements

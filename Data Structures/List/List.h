@@ -32,8 +32,6 @@ namespace Lehr {
         virtual void operator <<(T& into) {
             shift(into);
         }
-        virtual T& begin() = 0;
-        virtual T& end() = 0;
 
         virtual int index(const T& item) = 0;
         virtual bool contains(const T& item) = 0;

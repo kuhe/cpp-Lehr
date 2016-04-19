@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <type_traits>
 
 #if defined(_WIN32)
 
@@ -23,5 +24,10 @@ using std::ifstream;
 using std::cout;
 using std::endl;
 using std::cin;
+
+using std::move;
+using std::function;
+using std::forward;
+using std::remove_const;
 
 #endif //CPPREF__STD_SYMBOLS_H

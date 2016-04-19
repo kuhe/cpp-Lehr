@@ -12,17 +12,19 @@ struct Results {
 extern Results results;
 
 template <typename T, typename V>
-void console_test(T a, V b) {
+bool console_test(T a, V b) {
     if (a == b) {
         cout << ".";
         results.score++;
+        return true;
     } else {
         results.failed++;
         cout << "\n" << a << " != " << b << endl;
     }
+    return false;
 }
 template <typename T>
-void console_test(T a) {
+bool console_test(T a) {
     if (a) {
         cout << ".";
         results.score++;
@@ -30,11 +32,12 @@ void console_test(T a) {
         results.failed++;
         cout << "\n" << a << " !! " << endl;
     }
+    return a;
 }
-template void console_test<string, string>(string a, string b);
-template void console_test<int, int>(int a, int b);
-template void console_test<bool, bool>(bool a, bool b);
-template void console_test<double, double>(double a, double b);
-template void console_test<bool>(bool a);
+template bool console_test<string, string>(string a, string b);
+template bool console_test<int, int>(int a, int b);
+template bool console_test<bool, bool>(bool a, bool b);
+template bool console_test<double, double>(double a, double b);
+template bool console_test<bool>(bool a);
 
 #endif //CPPREF_TEST_COMMON_H

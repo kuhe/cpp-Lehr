@@ -4,6 +4,11 @@
 #include <sstream>
 #include "_map_common.h"
 
+/*
+ * This is a hashmap.
+ * For an ordered map, see BinarySearchTree in Graph
+ */
+
 namespace Lehr {
     /**
      * Act as a Linked-LinkedList like store for hash collisions.

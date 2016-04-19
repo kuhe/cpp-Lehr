@@ -1,9 +1,9 @@
 #include "test_lists.h"
-#include <type_traits>
 
 using Lehr::LinkedList;
 using Lehr::ArrayList;
 
+template<typename string_list, typename int_list>
 int test_lists() {
 
     string a = "hello.",
@@ -16,10 +16,9 @@ int test_lists() {
            h = "indexTest";
 
     /** pick a list implementation */
-//    ArrayList<int> numbers;
-    ArrayList<string> lln, lln2;
-//    LinkedList<string> lln, lln2;
-    LinkedList<int> numbers;
+    string_list lln;
+    string_list lln2;
+    int_list numbers;
 
     lln.push(c);
     lln.push(d);
@@ -58,8 +57,11 @@ int test_lists() {
     lln.unshift(a_test);
     lln.push(f_test);
     lln.push(g_test);
-    string end = lln.end();
-    string begin = lln.begin();
+
+    auto it = lln.end();
+
+    string end = *(--it);
+    string begin = *lln.begin();
     console_test(end, lln[lln.size() - 1]);
     console_test(begin, lln[0]);
 
@@ -118,8 +120,8 @@ int test_lists() {
 
     numbers.sort();
 
-    console_test(numbers.begin(), -4444);
-    console_test(numbers.end(), 4444);
+    console_test(*(numbers.begin()), -4444);
+    console_test(*(--(numbers.end())), 4444);
 
     numbers.push(55555);
     numbers.push(333);
@@ -135,11 +137,39 @@ int test_lists() {
     console_test(numbers[0], -55555);
     console_test(numbers[numbers.size() - 1], 55555);
 
+    numbers.empty();
+    vector<int> values = {-5, -4, -3, -2, -1, 1, 2, 3, 4, 5};
+    for (auto i : values) {
+        numbers.push(i);
+    }
 
-    using list_type = std::remove_const<decltype(numbers)>::type;
-    list_type list = std::move(numbers);
+    int ix = 0;
+    for (auto number : numbers) {
+        console_test(number, values[ix++]);
+    }
 
-    std::function<typename list_type::value_type(void)> fn = [&list]() -> list_type::value_type {
+    numbers.map([](int n) {
+        return n * 2;
+    });
+
+    ix = 0;
+    for (auto number : numbers) {
+        console_test(number, 2 * values[ix++]);
+    }
+
+    numbers.filter([](int n) {
+        return n > 0;
+    });
+
+    ix = 5;
+    for (auto number : numbers) {
+        console_test(number, 2 * values[ix++]);
+    }
+
+    using list_type = typename remove_const<decltype(numbers)>::type;
+    list_type list = move(numbers);
+
+    function<typename list_type::value_type(void)> fn = [&list]() -> typename list_type::value_type {
         return list[0];
     };
     auto fn2 = [&](int i1, int i2) {
@@ -152,3 +182,5 @@ int test_lists() {
     return 0;
 };
 
+template int test_lists<ArrayList<string>, ArrayList<int>>();
+template int test_lists<LinkedList<string>, LinkedList<int>>();

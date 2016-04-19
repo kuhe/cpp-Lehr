@@ -13,21 +13,33 @@ int main() {
     cout << "Hello, World!" << endl << endl;
 
     cout << "List: ";
-    int test = test_lists();
+    using al_str = Lehr::ArrayList<string>;
+    using al_int = Lehr::ArrayList<int>;
+    int test = test_lists<al_str, al_int>();
+    using ll_str = Lehr::LinkedList<string>;
+    using ll_int = Lehr::LinkedList<int>;
+    test = test_lists<ll_str, ll_int>();
+
     cout << "Map: ";
     int test2 = test_map();
+
     cout << "Graph: ";
     int test3 = test_graph();
+
     cout << "Tree: ";
     int test4 = test_trees();
+
     cout << "Rule of X: ";
     test_rule_of_X();
+
     cout << "const: ";
     test_const();
+
     cout << "Pointer: ";
     int test7 = test_pointers();
 
-    cout << "\nYay! " << to_string(results.score) << " passed. " << to_string(results.failed) << " mysterious failure(s)." << endl;
+    cout << "\nYay! " << to_string(results.score) << " passed. "
+         << to_string(results.failed) << " mysterious failure(s)." << endl;
 
     // cin.get();
 
