@@ -306,16 +306,15 @@ namespace Lehr {
     }
     template <typename T>
     LinkedList<T>* LinkedList<T>::splice(int before, LinkedList<T>& list) {
-        int original_length = length;
+        size_t original_length = length;
         length += list.length;
         if (before > 0) {
             Node* diverge_at = node_at(before - 1);
             Node* rejoin_at = node_at(before);
             Node* cursor = diverge_at;
-            while (list.length) {
-                T new_item;
-                list.shift(new_item);
-                Node* node_copy = new Node(new_item);
+            while (list.length) { // todo: way to do this with fewer copies?
+                Node* node_copy = new Node();
+                list.shift(node_copy->item);
                 cursor->next = node_copy;
                 cursor = cursor->next;
             }
