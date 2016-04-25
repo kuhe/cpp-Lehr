@@ -254,14 +254,14 @@ namespace Lehr {
             into = std::move(head->item);
             if (length == 1) {
                 tail = nullptr;
+                delete head;
                 head = nullptr;
-                length = 0;
             } else {
                 Node* current_head = head;
                 head = current_head->next;
                 delete current_head;
-                length--;
             }
+            length--;
         }
     }
     template <typename T>
