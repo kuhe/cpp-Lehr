@@ -293,7 +293,11 @@ namespace Lehr {
         if (data != nullptr) {
             delete[] data;
         }
-        length -= start_index;
+        if (length > n) {
+            length = n;
+        } else {
+            length -= start_index;
+        }
         data = transfer;
     }
     template <typename T>

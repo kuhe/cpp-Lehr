@@ -9,6 +9,7 @@
 #if defined(_WIN32)
 
 #include <stdint.h>
+#include <functional>
 
 typedef uint8_t u_int8_t;
 typedef uint16_t u_int16_t;
