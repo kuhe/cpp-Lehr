@@ -227,8 +227,9 @@ namespace Lehr {
             tail = nullptr;
             head = nullptr;
         } else {
-            T copy = tail->item;
-            into = copy;
+            //T copy = tail->item;
+            //into = copy;
+            into = std::move(tail->item);
             delete tail;
             if (length > 1) {
                 LinkedList<T>::Node* new_tail = node_at((int)length - 2);
@@ -248,8 +249,9 @@ namespace Lehr {
             tail = nullptr;
             head = nullptr;
         } else {
-            T copy = head->item;
-            into = copy;
+            //T copy = head->item;
+            //into = copy;
+            into = std::move(head->item);
             if (length == 1) {
                 tail = nullptr;
                 head = nullptr;

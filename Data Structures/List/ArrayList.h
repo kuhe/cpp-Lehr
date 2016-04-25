@@ -183,16 +183,18 @@ namespace Lehr {
     void ArrayList<T>::pop(T& into) {
         if (length > 0) {
             size_t index = length - 1;
-            T copy = data[index];
-            into = copy;
+            //  T copy = data[index];
+            // into = copy;
+            into = std::move(data[index]);
             length--;
         }
     }
     template <typename T>
     void ArrayList<T>::shift(T& into) {
         if (length > 0) {
-            T copy = data[0];
-            into = copy;
+            //T copy = data[0];
+            //into = copy;
+            into = std::move(data[0]);
             resize(length - 1, 1);
         }
     }
