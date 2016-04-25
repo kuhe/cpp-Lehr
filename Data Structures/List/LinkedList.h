@@ -185,8 +185,7 @@ namespace Lehr {
 
     template <typename T>
     LinkedList<T>* LinkedList<T>::push(T item) {
-        T copy = item;
-        LinkedList<T>::Node* node = new LinkedList<T>::Node(copy);
+        LinkedList<T>::Node* node = new LinkedList<T>::Node(item);
         if (nullptr != tail) {
             tail->next = node;
             tail = tail->next;
