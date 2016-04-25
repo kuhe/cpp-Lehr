@@ -17,7 +17,7 @@ templates, and a convenient google search index called "any and all g++ error me
 todo:
 
     Todo
-        move semantics for Lists
+        emplacement for Lists
         Dijkstra and A* on graphs
         more specialty graphs (e.g. BRTree)
         copy-and-swap idiom
