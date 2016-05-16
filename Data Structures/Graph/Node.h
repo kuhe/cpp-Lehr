@@ -15,6 +15,8 @@ namespace Lehr {
         Node(T item) : item(item) {}
 
         T item;
+        LinkedList<Node<T>*> nodes;
+        LinkedList<Edge<T>*> edges;
 
         void connect(Edge<T>* edge) {
             Node<T>* other = edge->other(this);
@@ -25,9 +27,10 @@ namespace Lehr {
                 edges.push(edge);
             }
         }
-
-        LinkedList<Node<T>*> nodes;
-        LinkedList<Edge<T>*> edges;
+        void connect(Node<T>* node) {
+            Edge<T> e(this, node);
+            connect(&e);
+        }
 
         bool adjacent(Node<T>* node) {
             return *this == *node || nodes.contains(node);
@@ -40,9 +43,6 @@ namespace Lehr {
             bool connects = hasConnection(node);
             return connects;
         }
-        /**
-         * i.e. path exists to a node in the edge
-         */
         bool connects(Edge<T>* edge) {
             return connects(edge->left); // the other node is by definition connected.
         }

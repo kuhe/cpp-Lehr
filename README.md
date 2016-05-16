@@ -31,13 +31,16 @@ todo:
         see 23.2 Container Requirements, refactor to meet requirements
 
 
-Currently implemented:
+Currently implemented (approximate corresponding Java/C++ library class):
 
-    LinkedList, ArrayList from virtual List
-    Lehr::Map, Lehr::Set
-    Lehr::Graph
-    Lehr::BinarySearchTree
-    Lehr::UniquePointer, Lehr::SharedPointer
+    LinkedList (LinkedList/forward_list)
+    ArrayList (ArrayList/vector)
+    Map (HashMap/unordered_map)
+    Set (HashSet/unordered_set)
+    Graph (/)
+    BinarySearchTree (TreeMap/map)
+    UniquePointer (/unique_ptr)
+    SharedPointer (/shared_ptr)
 
 
 ### Code Style Notes

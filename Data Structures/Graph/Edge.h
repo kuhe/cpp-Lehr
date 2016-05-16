@@ -8,7 +8,7 @@ namespace Lehr {
     template <typename T>
     class Edge {
     public:
-        double weight;
+        double weight = 1.0;
         Node<T>* left;
         Node<T>* right;
         Edge(Node<T>* l, Node<T>* r) : left(l), right(r) {
