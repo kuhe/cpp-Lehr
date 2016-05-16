@@ -1,7 +1,6 @@
 #ifndef CPPREF_MAP_H
 #define CPPREF_MAP_H
 
-#include <sstream>
 #include "_map_common.h"
 
 /*

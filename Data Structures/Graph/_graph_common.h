@@ -2,6 +2,7 @@
 #define CPPREF_GRAPH_COMMON_H_H
 
 #include "../List/_list_common.h"
+#include "../Set/_set_common.h"
 
 namespace Lehr {
     template <typename T>

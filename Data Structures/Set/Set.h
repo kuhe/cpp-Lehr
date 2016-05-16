@@ -1,9 +1,7 @@
 #ifndef CPPREF_SET_H
 #define CPPREF_SET_H
 
-#include <sstream>
-#include "_set_common.h"
-#include "../Map/_map_common.h"
+#include "./_set_common.h"
 
 namespace Lehr {
     using Lehr::Map;
