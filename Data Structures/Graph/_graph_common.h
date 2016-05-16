@@ -13,7 +13,6 @@ namespace Lehr {
     class Graph;
 }
 
-#include "../List/LinkedList.h"
 #include "Node.h"
 #include "Edge.h"
 #include "Graph.h"
