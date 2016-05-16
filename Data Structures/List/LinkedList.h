@@ -37,6 +37,7 @@ namespace Lehr {
          */
         LinkedList<T>* sort() override;
         using List<T>::mergesort;
+        friend struct Merge<T>;
         LinkedList<T>* excise(int at);
         LinkedList<T>* excise(int from, int to);
         LinkedList<T>* splice(int before, LinkedList<T>& list);
@@ -51,6 +52,7 @@ namespace Lehr {
         iterator end();
 
     protected:
+        using List<T>::sortable;
         size_t length = 0;
         struct Node {
             friend class LinkedList<T>;
@@ -127,6 +129,21 @@ namespace Lehr {
     template class LinkedList<std::string>;
     template class LinkedList<int>;
     template class LinkedList<double>;
+}
+
+namespace Lehr {
+    template<typename T>
+    struct Merge {
+        static LinkedList<T>* sort(LinkedList<T>& list, false_type) {
+            return &list;
+        }
+        static LinkedList<T>* sort(LinkedList<T>& list, true_type) {
+            size_t middle = list.length / 2;
+            LinkedList<T> merge_staging;
+            list.mergesort(0, middle, merge_staging);
+            return &list;
+        }
+    };
 }
 
 namespace Lehr {
@@ -280,13 +297,13 @@ namespace Lehr {
     bool LinkedList<T>::contains(const T& item) {
         return index(item) > -1;
     }
+
     template <typename T>
     LinkedList<T>* LinkedList<T>::sort() {
-        size_t middle = length / 2;
-        LinkedList<T> merge_staging;
-        mergesort(0, middle, merge_staging);
-        return this;
+        typename IsSortable<T>::value_type can_sort;
+        return Merge<T>::sort(*this, can_sort);
     }
+
     template <typename T>
     LinkedList<T>* LinkedList<T>::excise(int at) {
         return excise(at, at);

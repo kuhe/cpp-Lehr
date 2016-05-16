@@ -90,6 +90,8 @@ namespace Lehr {
                 }
             }
         }
+    protected:
+        static constexpr bool sortable = IsSortable<T>::value;
     };
 }
 

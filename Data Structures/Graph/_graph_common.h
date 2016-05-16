@@ -1,9 +1,9 @@
 #ifndef CPPREF_GRAPH_COMMON_H_H
 #define CPPREF_GRAPH_COMMON_H_H
 
+#include "../List/_list_common.h"
+
 namespace Lehr {
-    template <typename T>
-    class LinkedList;
     template <typename T>
     class Node;
     template <typename T>

@@ -125,6 +125,7 @@ namespace Lehr {
             int hash_index = hash(&key);
             KeyValuePair<K,V>& bucket = table[hash_index];
             KeyValuePair<K,V>* candidate = &bucket;
+
             do {
                 if (candidate->key == key) {
                     return candidate->value;
@@ -133,6 +134,7 @@ namespace Lehr {
                     candidate = candidate->next;
                 }
             } while(candidate->next != nullptr);
+
             if (candidate->key != key) {
                 if (candidate->isInitialized()) {
                     candidate->next = new KeyValuePair<K,V>(key);
@@ -141,7 +143,9 @@ namespace Lehr {
                     candidate->key = key;
                     candidate->initialize();
                 }
+                keys.push(key);
             }
+
             return candidate->value;
         }
         int hash(const K& key) const {
@@ -152,6 +156,11 @@ namespace Lehr {
             Hash<K> h(tableSize);
             return h(key);
         }
+        LinkedList<K> getKeys() { // copies the keys
+            return keys;
+        }
+    protected:
+        LinkedList<K> keys;
     private:
         int tableSize = 128;
         KeyValuePair<K,V>* table;

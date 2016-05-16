@@ -85,24 +85,30 @@ int test_map() {
 
     /** test overloaded hash key */
     Map<int, int> dictionary;
-    int k = 1000;
-    while (k > 0) {
+    int k = 100;
+    while (k-- > 0) {
         dictionary[k] = 3;
-        k--;
     }
-    dictionary[1001] = 5;
-    k = 1000;
-    while (k > 0) {
+
+    dictionary[101] = 5;
+    k = 100;
+    while (k-- > 0) {
         if (dictionary[k] != 3) {
             test(dictionary[k], 3);
         } else {
-            if (k % 100 == 0) {
+            if (k % 10 == 0) {
                 test(dictionary[k], 3);
             }
         }
-        k--;
     }
-    test(dictionary[1001], 5);
+    test(dictionary[101], 5);
+
+    auto keys1 = dictionary.getKeys();
+    test(keys1.size(), 100);
+    keys1.empty();
+
+    auto keys2 = dictionary.getKeys();
+    test(keys2.size(), 100);
 
     /** test hash set */
     // note: bool keyed map is buggy :(

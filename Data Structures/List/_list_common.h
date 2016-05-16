@@ -2,13 +2,27 @@
 #define CPPREF__LIST_COMMON_H
 
 #include <memory>
-
-using std::shared_ptr;
-using std::make_shared;
-using std::unique_ptr;
-using std::size_t;
+#include "../../Utilities/_std_symbols.h"
 
 namespace Lehr {
+
+    struct Unimplemented {};
+    template<typename T, typename R>
+    Unimplemented operator <(const T&, const R&);
+
+    template<typename T, typename R = T>
+    struct IsSortable {
+        enum {
+            value =
+                is_same<T, int>::value ||
+                is_same<T, double>::value ||
+                is_same<decltype(  *(T*)(0) == *(R*)(0)  ), Unimplemented>::value
+        };
+        typedef integral_constant<bool, value> value_type;
+    };
+
+    template<typename T>
+    struct Merge;
     template <typename T>
     class ArrayList;
     template <typename T>

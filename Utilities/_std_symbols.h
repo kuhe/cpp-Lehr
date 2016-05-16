@@ -17,6 +17,16 @@ typedef uint32_t u_int32_t;
 
 #endif
 
+using std::true_type;
+using std::false_type;
+
+using std::integral_constant;
+
+using std::is_same;
+using std::enable_if;
+
+using std::size_t;
+
 using std::vector;
 using std::string;
 using std::to_string;

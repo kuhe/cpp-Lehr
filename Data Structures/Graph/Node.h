@@ -66,7 +66,7 @@ namespace Lehr {
         /**
          * path exists to a node in the edge
          */
-        bool connects(Edge <T> *edge) {
+        bool connects(Edge<T>* edge) {
             return connects(edge->left); // the other node is by definition connected.
         }
 
