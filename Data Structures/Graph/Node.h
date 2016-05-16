@@ -11,7 +11,7 @@ namespace Lehr {
     template <typename T>
     class Node {
         T item;
-        LinkedList<Node<T>*> visited;
+        Set<Node<T>*> visited;
         /**
          * potentially multi-step path exists to the node
          */
@@ -20,12 +20,11 @@ namespace Lehr {
             if (adjacent(node)) {
                 return true;
             }
-            // @todo I should use a set instead of a list for visited nodes
             for (int i = 0; i < nodes.size(); i++) {
                 Node<T>* n = nodes[i];
                 bool test = visited.contains(n);
                 if (!visited.contains(n)) {
-                    visited.push(n);
+                    visited.add(n);
                     connected = n->hasConnection(node);
                     if (connected)
                         return true;
@@ -57,9 +56,7 @@ namespace Lehr {
             return edges.contains(edge);
         }
         bool connects(Node<T>* node) {
-            while (visited.size() > 0) {
-                visited.pop();
-            }
+            visited.clear();
             bool connects = hasConnection(node);
             return connects;
         }

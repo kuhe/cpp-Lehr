@@ -14,4 +14,6 @@ namespace Lehr {
     class Map;
 }
 
+#include "./Map.h"
+
 #endif //_CPPREF_MAP_COMMON_H_

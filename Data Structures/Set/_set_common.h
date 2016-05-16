@@ -11,4 +11,6 @@ namespace Lehr {
     class Set;
 }
 
+#include "./Set.h"
+
 #endif //CPPREF_SET_COMMON_H
