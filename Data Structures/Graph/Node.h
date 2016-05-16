@@ -10,31 +10,11 @@ using Lehr::Edge; // redundant, but to correct an IDE resolution failure
 namespace Lehr {
     template <typename T>
     class Node {
-        T item;
-        Set<Node<T>*> visited;
-        /**
-         * potentially multi-step path exists to the node
-         */
-        bool hasConnection(Node<T>* node) {
-            bool connected;
-            if (adjacent(node)) {
-                return true;
-            }
-            for (int i = 0; i < nodes.size(); i++) {
-                Node<T>* n = nodes[i];
-                bool test = visited.contains(n);
-                if (!visited.contains(n)) {
-                    visited.add(n);
-                    connected = n->hasConnection(node);
-                    if (connected)
-                        return true;
-                }
-            }
-            return false;
-        }
     public:
         Node() {}
         Node(T item) : item(item) {}
+
+        T item;
 
         void connect(Edge<T>* edge) {
             Node<T>* other = edge->other(this);
@@ -61,7 +41,7 @@ namespace Lehr {
             return connects;
         }
         /**
-         * path exists to a node in the edge
+         * i.e. path exists to a node in the edge
          */
         bool connects(Edge<T>* edge) {
             return connects(edge->left); // the other node is by definition connected.
@@ -75,6 +55,28 @@ namespace Lehr {
         }
         void operator = (T value) {
             item = value;
+        }
+    protected:
+        Set<Node<T>*> visited;
+        /**
+         * potentially multi-step path exists to the node
+         */
+        bool hasConnection(Node<T>* node) {
+            bool connected;
+            if (adjacent(node)) {
+                return true;
+            }
+            for (int i = 0; i < nodes.size(); i++) {
+                Node<T>* n = nodes[i];
+                bool test = visited.contains(n);
+                if (!visited.contains(n)) {
+                    visited.add(n);
+                    connected = n->hasConnection(node);
+                    if (connected)
+                        return true;
+                }
+            }
+            return false;
         }
     };
 }

@@ -11,12 +11,12 @@ namespace Lehr {
     template <typename T>
     class Graph {
     protected:
-        LinkedList<Node<T>*> nodes;
-        LinkedList<Edge<T>*> edges;
+        Set<Node<T>*> nodes;
+        Set<Edge<T>*> edges;
     public:
         Graph& addNode(Node<T>* node) {
             if (!nodes.contains(node)) {
-                nodes.push(node);
+                nodes.add(node);
             }
             return *this;
         }
@@ -29,14 +29,14 @@ namespace Lehr {
         }
         Graph& addEdge(Node<T>* a, Node<T>* b, int edgeWeight=0) {
             if (!nodes.contains(a)) {
-                nodes.push(a);
+                nodes.add(a);
             }
             if (!nodes.contains(b)) {
-                nodes.push(b);
+                nodes.add(b);
             }
             Edge<T> edge(a, b);
             edge.weight = edgeWeight;
-            edges.push(&edge);
+            edges.add(&edge);
             return *this;
         }
         Graph& addEdge(Edge<T>* edge) {
@@ -44,13 +44,13 @@ namespace Lehr {
             a = edge->left;
             b = edge->right;
             if (!nodes.contains(a)) {
-                nodes.push(a);
+                nodes.add(a);
             }
             if (!nodes.contains(b)) {
-                nodes.push(b);
+                nodes.add(b);
             }
             if (!edges.contains(edge)) {
-                edges.push(edge);
+                edges.add(edge);
             }
             return *this;
         }
