@@ -3,7 +3,7 @@
 
 #include <sstream>
 #include "_set_common.h"
-#include "../Map/Map.h"
+#include "../Map/_map_common.h"
 
 namespace Lehr {
     using Lehr::Map;
@@ -12,31 +12,48 @@ namespace Lehr {
      */
     template <typename T>
     class Set {
-        Map<T, bool> map;
+        struct Entry;
+        Map<T, Entry>* map = new Map<T, Entry>();
     public:
         Set() {
         }
         ~Set() {
+            delete map;
         }
-        bool operator [](T val) {
-            return map[val];
+        bool operator [](const T& val) {
+            return map->operator [](val).is_set;
         }
-        bool contains(T val) {
+        bool contains(const T& val) {
             return this->operator [](val);
         };
-        bool add(T val) {
-            bool exists = map[val];
-            map[val] = true;
+        bool add(const T& val) {
+            bool exists = (bool) map->operator [](val) != unset;
+            map->operator [](val).set();
             return exists;
         }
-        bool remove(T val) {
-            bool exists = map[val];
-            map[val] = false;
+        bool remove(const T& val) {
+            bool exists = (bool) map->operator [](val);
+            map->operator [](val).unset();
             return exists;
         }
         void clear() {
-            map = *(new Map<T, bool>);
+            delete map;
+            map = new Map<T, Entry>();
         }
+    private:
+        struct Entry {
+            explicit operator bool() {
+                return is_set;
+            }
+            bool is_set = false;
+            void set() {
+                is_set = true;
+            }
+            void unset() {
+                is_set = false;
+            }
+        };
+        char unset = '\0';
     };
 }
 

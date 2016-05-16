@@ -125,42 +125,42 @@ int test_map() {
     test(test1, false);
     test(test2, false);
 
-    s1.add(false);
-    test1 = s1.contains(false);
-    test2 = s1.contains(true);
-    test(test1, true);
-    test(test2, false);
+    s1.add(0);
+    test1 = s1.contains(0);
+    test2 = s1.contains(1);
+    test(test1, 1);
+    test(test2, 0);
 
-    s1.add(true);
-    test1 = s1.contains(false);
-    test2 = s1.contains(true);
-    test(test1, true);
-    test(test2, true);
+    s1.add(1);
+    test1 = s1.contains(0);
+    test2 = s1.contains(1);
+    test(test1, 1);
+    test(test2, 1);
 
-    s1.remove(false);
-    test1 = s1.contains(false);
-    test2 = s1.contains(true);
-    test(test1, false);
-    test(test2, true);
+    s1.remove(0);
+    test1 = s1.contains(0);
+    test2 = s1.contains(1);
+    test(test1, 0);
+    test(test2, 1);
 
-    s1.remove(true);
-    test1 = s1.contains(false);
-    test2 = s1.contains(true);
-    test(test1, false);
-    test(test2, false);
+    s1.remove(1);
+    test1 = s1.contains(0);
+    test2 = s1.contains(1);
+    test(test1, 0);
+    test(test2, 0);
 
-    s1.add(false);
-    s1.add(true);
-    test1 = s1.contains(false);
-    test2 = s1.contains(true);
-    test(test1, true);
-    test(test2, true);
+    s1.add(0);
+    s1.add(1);
+    test1 = s1.contains(0);
+    test2 = s1.contains(1);
+    test(test1, 1);
+    test(test2, 1);
 
     s1.clear();
-    test1 = s1.contains(false);
-    test2 = s1.contains(true);
-    test(test1, false);
-    test(test2, false);
+    test1 = s1.contains(0);
+    test2 = s1.contains(1);
+    test(test1, 0);
+    test(test2, 0);
 
     cout << endl;
     return 0;
