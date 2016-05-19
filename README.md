@@ -4,24 +4,25 @@
 
 #### The Poor Man's Computer Science Revue
 
-Learning lists, hashes, graphs, in the context
+Starring lists, hashes, graphs, in the context
 of basic algorithms and data structures.
 
-Adding learner's implementations of common data structures under the Lehr namespace.
+Learner's implementations under the Lehr namespace.
 
-Thus, additionally serving as (for free) a good old-fashioned beat down courtesy of the C++ language, via
-pointers, references to pointers, pointers to pointers, segfaults, the mysterious const keyword, type deduction,
-templates, and a convenient google search index called "any and all g++ error messages".
+As a bonus, a free beating courtesy of the C++ language, delivered using
+dangling pointers, segfaults, the mysterious const keyword, type deduction,
+templates and their meta-programming, and a convenient google search index called "any and all g++ error messages".
 
 
 todo:
 
     Todo
-        emplacement for Lists
+        initializer list for List construction
         Dijkstra and A* on graphs
-        more specialty graphs (e.g. BRTree)
+        BRTRee, BST balancing
         copy-and-swap idiom
         weak smart pointers
+        Heap
 
     Cleanup
         stack allocation of ArrayList (no constructor call?) results in faulty delete in destructor

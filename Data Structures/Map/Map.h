@@ -120,6 +120,21 @@ namespace Lehr {
             delete[] table;
         }
 
+        bool contains(const K& key) {
+            int hash_index = hash(&key);
+            KeyValuePair<K,V>& bucket = table[hash_index];
+            KeyValuePair<K,V>* candidate = &bucket;
+            do {
+                if (candidate->key == key) {
+                    return true;
+                }
+                if (nullptr != candidate->next) {
+                    candidate = candidate->next;
+                }
+            } while(candidate->next != nullptr);
+            return candidate->key == key;
+        }
+
         V& operator [](const K& key) {
             int hash_index = hash(&key);
             KeyValuePair<K,V>& bucket = table[hash_index];

@@ -27,7 +27,7 @@ namespace Lehr {
             }
             return *this;
         }
-        Graph& addEdge(Node<T>* a, Node<T>* b, int edgeWeight=0) {
+        Edge<T> addEdge(Node<T>* a, Node<T>* b, int edgeWeight=0) {
             if (!nodes.contains(a)) {
                 nodes.add(a);
             }
@@ -37,7 +37,7 @@ namespace Lehr {
             Edge<T> edge(a, b);
             edge.weight = edgeWeight;
             edges.add(&edge);
-            return *this;
+            return edge;
         }
         Graph& addEdge(Edge<T>* edge) {
             Node<T>* a, * b;
@@ -59,6 +59,19 @@ namespace Lehr {
         }
         bool contains(Edge<T>* edge) {
             return edges.contains(edge);
+        }
+
+        // @see Wikipedia: A* search algorithm
+        LinkedList<Node<T>*> A_star(Node<T>& start, Node<T>& goal, function<int(Node<T>& start, Node<T>& goal)> heuristic) {
+            Set<Node<T>*> closed;
+            Set<Node<T>*> open;
+            open.add(&start);
+            Map<Node<T>*, int> g_score;
+            g_score[&start] = 0;
+
+            // todo, not implemented, just matching method signature
+            LinkedList<Node<T>*> total_path;
+            return total_path;
         }
     };
 }
