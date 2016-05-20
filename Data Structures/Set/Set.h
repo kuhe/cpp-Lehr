@@ -45,13 +45,7 @@ namespace Lehr {
             map = new Map<T, Entry>();
         }
         LinkedList<T> values() {
-
-            auto t1 = map->getKeys();
-
             return *map->getKeys().filter([this](T item) -> bool {
-
-                auto t2 = contains(item);
-
                 return contains(item);
             });
         }
