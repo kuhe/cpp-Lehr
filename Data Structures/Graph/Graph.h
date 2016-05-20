@@ -86,7 +86,7 @@ namespace Lehr {
             auto get_lowest_f_score = [&f_score]() -> Node<T>* {
                 Node<T>* candidate = nullptr;
                 double min = INT_MAX;
-                for (auto node : f_score.getKeys()) {
+                for (auto node : f_score.keys()) {
                     double score = f_score[node];
                     if (score < min) {
                         candidate = node;

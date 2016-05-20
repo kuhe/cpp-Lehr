@@ -73,7 +73,7 @@ int test_graph() {
             }
         }
 
-        console_test(nodes.getKeys().size(), 31);
+        console_test(nodes.keys().size(), 31);
         console_test(nodes[11]->connects(nodes[66]));
 
         // decltype(auto) // C++14

@@ -103,11 +103,11 @@ int test_map() {
     }
     test(dictionary[101], 5);
 
-    auto keys1 = dictionary.getKeys();
+    auto keys1 = dictionary.keys();
     test(keys1.size(), 100);
     keys1.empty();
 
-    auto keys2 = dictionary.getKeys();
+    auto keys2 = dictionary.keys();
     test(keys2.size(), 100);
 
     /** test hash set */

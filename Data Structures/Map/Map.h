@@ -157,7 +157,7 @@ namespace Lehr {
                     candidate->key = key;
                     candidate->initialize();
                 }
-                keys.push(key);
+                _keys.push(key);
             }
 
             return candidate->value;
@@ -170,11 +170,11 @@ namespace Lehr {
             Hash<K> h(tableSize);
             return h(key);
         }
-        LinkedList<K> getKeys() { // copies the keys
-            return keys;
+        LinkedList<K> keys() { // copies the keys
+            return _keys;
         }
     protected:
-        LinkedList<K> keys;
+        LinkedList<K> _keys;
     private:
         int tableSize = 128;
         KeyValuePair<K,V>* table;
