@@ -10,8 +10,8 @@ namespace Lehr {
      */
     template <typename T>
     class Set {
+    protected:
         struct Entry;
-        Map<T, Entry>* map = new Map<T, Entry>();
     public:
         Set() {
         }
@@ -19,26 +19,51 @@ namespace Lehr {
             delete map;
         }
         bool operator [](const T& val) {
-            return map->operator [](val).is_set;
+            return contains(val);
         }
         bool contains(const T& val) {
-            return this->operator [](val);
+            return entry(val).is_set;
         };
         bool add(const T& val) {
-            bool exists = (bool) map->operator [](val) != unset;
-            map->operator [](val).set();
+            bool exists = contains(val);
+            entry(val).set();
+            if (!exists) {
+                _size++;
+            }
             return exists;
         }
         bool remove(const T& val) {
-            bool exists = (bool) map->operator [](val);
-            map->operator [](val).unset();
+            bool exists = contains(val);
+            entry(val).unset();
+            if (exists) {
+                _size--;
+            }
             return exists;
         }
         void clear() {
             delete map;
             map = new Map<T, Entry>();
         }
-    private:
+        LinkedList<T> values() {
+
+            auto t1 = map->getKeys();
+
+            return *map->getKeys().filter([this](T item) -> bool {
+
+                auto t2 = contains(item);
+
+                return contains(item);
+            });
+        }
+        size_t size() {
+            return _size;
+        }
+        bool empty() {
+            return size() == 0;
+        }
+    protected:
+        Map<T, Entry>* map = new Map<T, Entry>();
+        size_t _size = 0;
         struct Entry {
             explicit operator bool() {
                 return is_set;
@@ -51,7 +76,9 @@ namespace Lehr {
                 is_set = false;
             }
         };
-        char unset = '\0';
+        Entry& entry(const T& val) {
+            return (map->operator [](val));
+        }
     };
 }
 

@@ -162,6 +162,27 @@ int test_map() {
     test(test1, 0);
     test(test2, 0);
 
+    {
+        int A = 5, B = 6;
+        Set<int> S;
+        S.add(A);
+        S.add(A);
+        S.add(A);
+        console_test(S.contains(A));
+        console_test(!S.contains(B));
+        console_test(S.size(), 1);
+        console_test(S.values().size(), 1);
+        console_test(S.values().contains(A));
+        S.add(B);
+        console_test(S.size(), 2);
+        console_test(S.values().size(), 2);
+        console_test(S.values().contains(A));
+        S.remove(A);
+        console_test(S.size(), 1);
+        console_test(S.values().size(), 1);
+        console_test(S.values().contains(B));
+    }
+
     cout << endl;
     return 0;
 };

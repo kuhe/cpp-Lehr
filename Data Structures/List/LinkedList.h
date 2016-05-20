@@ -310,7 +310,7 @@ namespace Lehr {
     }
     template <typename T>
     LinkedList<T>* LinkedList<T>::excise(int from, int to) {
-        if (from > 1) {
+        if (from >= 1) {
             node_at(from - 1)->next = node_at(to + 1);
             length -= to - from + 1;
         } else {

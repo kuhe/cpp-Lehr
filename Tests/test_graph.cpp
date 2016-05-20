@@ -1,3 +1,4 @@
+#include <math.h>
 #include "test_graph.h"
 
 using Lehr::Graph;
@@ -76,13 +77,15 @@ int test_graph() {
         console_test(nodes[11]->connects(nodes[66]));
 
         // decltype(auto) // C++14
-        function<int(Node<int>& start, Node<int>& goal)> // C++11
-                heuristic = [](Node<int>& start, Node<int>& goal) -> int {
-            return 1;
+        function<double(Node<int>& start, Node<int>& goal)> // C++11
+                heuristic = [](Node<int>& start, Node<int>& goal) -> double {
+            double l = start.item/10 - goal.item/10;
+            double w = start.item%10 - goal.item%10;
+            return sqrt(l * l + w * w);
         };
 
-        auto path = graph.A_star(*nodes[11], *nodes[66], heuristic);
-        console_test(path.size(), 0);
+//        auto path = graph.A_star(*nodes[11], *nodes[66], heuristic);
+//        console_test(path.size(), 0);
     }
 
     cout << endl;

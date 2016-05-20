@@ -16,7 +16,9 @@ namespace Lehr {
             value =
                 is_same<T, int>::value ||
                 is_same<T, double>::value ||
-                is_same<decltype(  *(T*)(0) == *(R*)(0)  ), Unimplemented>::value
+                false
+                // todo check for implementation of comparison operator(s)
+                //is_same<decltype(  *(T*)(0) == *(R*)(0)  ), Unimplemented>::value
         };
         typedef integral_constant<bool, value> value_type;
     };

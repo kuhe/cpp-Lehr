@@ -3,6 +3,7 @@
 
 #include "../List/_list_common.h"
 #include "../Set/_set_common.h"
+#include "./BinarySearchTree/_bst_common.h"
 
 namespace Lehr {
     template <typename T>
