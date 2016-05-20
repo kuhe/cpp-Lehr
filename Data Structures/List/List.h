@@ -38,7 +38,7 @@ namespace Lehr {
 
         virtual List<T>* sort() = 0;
 
-        void empty() {
+        void clear() {
             while (size() > 0) {
                 pop();
             }
@@ -50,9 +50,9 @@ namespace Lehr {
             if (right != left) {
                 if (left + 1 != right) {
                     mergesort(left, left + segment_length / 2, stage);
-                    stage.empty();
+                    stage.clear();
                     mergesort(right, right + segment_length / 2, stage);
-                    stage.empty();
+                    stage.clear();
                 }
             }
             struct Assign {

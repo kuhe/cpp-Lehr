@@ -105,7 +105,7 @@ int test_map() {
 
     auto keys1 = dictionary.keys();
     test(keys1.size(), 100);
-    keys1.empty();
+    keys1.clear();
 
     auto keys2 = dictionary.keys();
     test(keys2.size(), 100);

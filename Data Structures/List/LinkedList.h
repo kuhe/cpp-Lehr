@@ -91,11 +91,14 @@ namespace Lehr {
                 return !operator ==(right);
             }
             iterator& operator ++() {
-                if (cursor->next != nullptr) {
-                    cursor = cursor->next;
-                    index++;
-                } else {
-                    index = end;
+                if (index != end) {
+                    if (cursor->next != nullptr) {
+                        cursor = cursor->next;
+                        index++;
+                    } else {
+                        index = end;
+                        cursor = nullptr;
+                    }
                 }
                 return *this;
             }
@@ -118,6 +121,7 @@ namespace Lehr {
             }
             iterator(LinkedList<T>& list): _list(list) {
                 index = end;
+                cursor = nullptr;
             }
             const long int end = -1;
             Node* cursor;

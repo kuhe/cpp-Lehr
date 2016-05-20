@@ -120,6 +120,14 @@ namespace Lehr {
             delete[] table;
         }
 
+        bool empty() {
+            return keys().size() == 0;
+        }
+
+        size_t size() {
+            return keys().size();
+        }
+
         bool contains(const K& key) {
             int hash_index = hash(&key);
             KeyValuePair<K,V>& bucket = table[hash_index];

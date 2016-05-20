@@ -17,17 +17,25 @@ namespace Lehr {
         V& operator [](K key);
         bool contains(K key);
         bool contains_value(V val);
+
+        /** remove all from the given match down */
         BinarySearchTree* truncate(K key);
         BinarySearchTree* truncate_value(V val);
+
+        /** remove only the match */
         BinarySearchTree* excise(K key);
         BinarySearchTree* excise_value(V val);
+
+        /** reform from the subtree starting at the match */
         BinarySearchTree* slice(K key);
         BinarySearchTree* slice_value(V val);
+
         K root_key();
         size_t depth();
         size_t size();
         BinarySearchTree* balance();
         ArrayList<K> keys();
+        bool empty();
 
         struct iterator;
         iterator begin();

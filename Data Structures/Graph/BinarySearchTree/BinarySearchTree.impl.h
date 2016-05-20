@@ -105,6 +105,10 @@ namespace Lehr {
 
         return keys;
     }
+    template<typename K, typename V>
+    bool BinarySearchTree<K, V>::empty() {
+        return size() == 0;
+    }
 
     template<typename K, typename V>
     typename BinarySearchTree<K, V>::iterator BinarySearchTree<K, V>::begin() {

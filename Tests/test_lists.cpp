@@ -137,7 +137,7 @@ int test_lists() {
     console_test(numbers[0], -55555);
     console_test(numbers[numbers.size() - 1], 55555);
 
-    numbers.empty();
+    numbers.clear();
     vector<int> values = {-5, -4, -3, -2, -1, 1, 2, 3, 4, 5};
     for (auto i : values) {
         numbers.push(i);

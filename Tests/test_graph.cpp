@@ -24,7 +24,8 @@ int test_graph() {
         bool test4 = n3.adjacent(&n1);
         bool test5 = n4.adjacent(&n1);
         bool test6 = !n4.adjacent(&n2);
-        bool test7 = n4.connects(&n3) && !n3.connects(&n5);
+        bool test7 = n4.connects(&n3);
+        bool test8 = !n3.connects(&n5);
 
         console_test(test1);
         console_test(test2);
@@ -33,6 +34,7 @@ int test_graph() {
         console_test(test5);
         console_test(test6);
         console_test(test7);
+        console_test(test8);
     }
 
     {
@@ -74,9 +76,13 @@ int test_graph() {
         }
 
         console_test(nodes.keys().size(), 31);
+
         console_test(nodes[11]->connects(nodes[66]));
         console_test(nodes[66]->connects(nodes[11]));
         console_test(nodes[61]->connects(nodes[16]));
+
+        console_test(nodes[16]->connects(nodes[11]));
+        console_test(nodes[11]->connects(nodes[61]));
         console_test(nodes[16]->connects(nodes[61]));
 
         // decltype(auto) // C++14
@@ -87,8 +93,8 @@ int test_graph() {
             return sqrt(l * l + w * w);
         };
 
-//        auto path = graph.A_star(*nodes[11], *nodes[66], heuristic);
-//        console_test(path.size(), 0);
+        auto path = graph.A_star(*nodes[11], *nodes[66], heuristic);
+        console_test(path.size() >= 10 && path.size() <= 12);
     }
 
     cout << endl;

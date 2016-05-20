@@ -47,7 +47,7 @@ namespace Lehr {
             return connects(edge->left); // the other node is by definition connected.
         }
 
-        bool operator == (Node const& node) {
+        bool operator == (const Node& node) {
             return this == &node;
         }
         bool operator == (T const& item) {
@@ -56,22 +56,31 @@ namespace Lehr {
         void operator = (T value) {
             item = value;
         }
+        explicit operator T() {
+            return item;
+        }
     protected:
-        Set<Node<T>*> visited;
         /**
-         * potentially multi-step path exists to the node
+         * temporary store for the connection traversal method(s)
          */
-        bool hasConnection(Node<T>* node) {
+        ArrayList<Node<T>*> visited;
+        /**
+         * (potentially multi-step) path exists to the node
+         */
+        bool hasConnection(Node<T>* target, Node<T>* origin = nullptr) {
+            if (nullptr == origin) {
+                origin = this;
+            }
             bool connected;
-            if (adjacent(node)) {
+            if (origin->adjacent(target)) {
                 return true;
             }
-            for (int i = 0; i < nodes.size(); i++) {
-                Node<T>* n = nodes[i];
-                bool test = visited.contains(n);
-                if (!visited.contains(n)) {
-                    visited.add(n);
-                    connected = n->hasConnection(node);
+            for (auto branch : origin->nodes) {
+                bool already_visited = visited.contains(branch);
+
+                if (!already_visited) {
+                    visited.push(branch);
+                    connected = hasConnection(target, branch);
                     if (connected)
                         return true;
                 }

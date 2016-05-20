@@ -9,9 +9,14 @@ namespace Lehr {
     class Edge {
     public:
         double weight = 1.0;
+        enum flow { BOTH, LEFT, RIGHT };
+        flow direction = BOTH;
+
         Node<T>* left;
         Node<T>* right;
-        Edge(Node<T>* l, Node<T>* r) : left(l), right(r) {
+        Edge(Node<T>* l, Node<T>* r) {
+            left = l;
+            right = r;
             l->connect(this);
             r->connect(this);
         }
