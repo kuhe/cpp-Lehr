@@ -75,6 +75,9 @@ int test_graph() {
 
         console_test(nodes.keys().size(), 31);
         console_test(nodes[11]->connects(nodes[66]));
+        console_test(nodes[66]->connects(nodes[11]));
+        console_test(nodes[61]->connects(nodes[16]));
+        console_test(nodes[16]->connects(nodes[61]));
 
         // decltype(auto) // C++14
         function<double(Node<int>& start, Node<int>& goal)> // C++11
