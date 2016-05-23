@@ -104,14 +104,13 @@ int test_map() {
     test(dictionary[101], 5);
 
     auto keys1 = dictionary.keys();
-    test(keys1.size(), 100);
+    test(keys1.size(), 101);
     keys1.clear();
 
     auto keys2 = dictionary.keys();
-    test(keys2.size(), 100);
+    test(keys2.size(), 101);
 
     /** test hash set */
-    // note: bool keyed map is buggy :(
     Map<int, bool> bMap;
     bMap[0] = true;
     bMap[1] = false;
@@ -190,6 +189,28 @@ int test_map() {
         console_test(words.contains("hello"));
         console_test(words.contains("world"));
         console_test(!words.contains("blam!"));
+    }
+
+    {
+        // deletion of keys
+        Map<int, int> ii;
+        ii[0] = 10;
+        ii[-0] = 12;
+        ii[false] = 14;
+        console_test(1, ii.size());
+        ii[1] = 9;
+        console_test(2, ii.size());
+        ii[2] = 8;
+        console_test(3, ii.size());
+        ii[3] = 7;
+        console_test(4, ii.size());
+        ii[4] = 6;
+        console_test(5, ii.size());
+        ii - 1;
+        ii - 3;
+        console_test(3, ii.size());
+        ii[1] = 12;
+        console_test(4, ii.size());
     }
 
     cout << endl;

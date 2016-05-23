@@ -23,10 +23,11 @@ todo:
         copy-and-swap idiom
         weak smart pointers
         Heap
+        Concurrency
 
     Cleanup
         stack allocation of ArrayList (no constructor call?) results in faulty delete in destructor
-        harden (hash) sets
+        How do you use an arbitrary object as a Map key? What if it has no serialization method?
 
     Horizon
         see 23.2 Container Requirements, refactor to meet requirements

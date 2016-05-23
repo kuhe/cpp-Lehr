@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES
         "Data Structures/Graph/_graph_common.h"
         "Data Structures/Graph/Graph.h"
+        "Data Structures/Graph/Graph.impl.h"
         "Data Structures/Graph/Node.h"
         "Data Structures/Graph/Edge.h"
 

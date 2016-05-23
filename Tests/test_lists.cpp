@@ -178,6 +178,11 @@ int test_lists() {
 
     console_test(list[0] * 2 + 1 + 2, fn() + fn2(1, 2));
 
+    {
+        LinkedList<int> a, b, c;
+        ArrayList<int> d, e, f;
+    }
+
     cout << endl;
     return 0;
 };

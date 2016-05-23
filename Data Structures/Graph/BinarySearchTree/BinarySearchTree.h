@@ -37,11 +37,35 @@ namespace Lehr {
         ArrayList<K> keys();
         bool empty();
 
+        V* first() {
+            return extremity(false);
+        }
+
+        V* last() {
+            return extremity(true);
+        }
+
         struct iterator;
         iterator begin();
         iterator end();
 
     protected:
+        V* extremity(bool right) {
+            auto cursor = root;
+            if (root == nullptr) {
+                return nullptr;
+            }
+            if (right) {
+                while (cursor->right != nullptr) {
+                    cursor = cursor->right;
+                }
+            } else {
+                while (cursor->left != nullptr) {
+                    cursor = cursor->left;
+                }
+            }
+            return &cursor->value;
+        }
         struct BSTNode;
         void ingest_copy(BSTNode* node);
         void attach(BSTNode* node);
@@ -116,8 +140,8 @@ namespace Lehr {
                 if (cursor == end) {
                     return pair<K, V>();
                 }
-                auto ref = (*members[cursor]);
-                return pair<K, V>(ref.key, ref.value);
+                auto& ref = (*members[cursor]);
+                return pair<K, V&>(ref.key, ref.value);
             }
             bool operator ==(iterator& right) {
                 return cursor == right.cursor;

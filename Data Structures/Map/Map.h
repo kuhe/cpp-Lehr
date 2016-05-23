@@ -48,6 +48,9 @@ namespace Lehr {
         void initialize() {
             initialized = true;
         }
+        void deactivate() {
+            initialized = false;
+        }
     private:
         void setValue(V& value) {
             initialized = true;
@@ -133,14 +136,14 @@ namespace Lehr {
             KeyValuePair<K,V>& bucket = table[hash_index];
             KeyValuePair<K,V>* candidate = &bucket;
             do {
-                if (candidate->key == key) {
+                if (candidate->key == key && candidate->isInitialized()) {
                     return true;
                 }
                 if (nullptr != candidate->next) {
                     candidate = candidate->next;
                 }
             } while(candidate->next != nullptr);
-            return candidate->key == key;
+            return candidate->key == key && candidate->isInitialized();
         }
 
         V& operator [](const K& key) {
@@ -150,7 +153,11 @@ namespace Lehr {
 
             do {
                 if (candidate->key == key) {
-                    return candidate->value;
+                    if (!candidate->isInitialized()) {
+                        _keys.push(key);
+                        candidate->initialize();
+                    }
+                    break;
                 }
                 if (nullptr != candidate->next) {
                     candidate = candidate->next;
@@ -159,12 +166,14 @@ namespace Lehr {
 
             if (candidate->key != key) {
                 if (candidate->isInitialized()) {
-                    candidate->next = new KeyValuePair<K,V>(key);
+                    if (candidate->next == nullptr) {
+                        candidate->next = new KeyValuePair<K,V>(key);
+                    }
                     candidate = candidate->next;
                 } else {
-                    candidate->key = key;
                     candidate->initialize();
                 }
+                candidate->key = key;
                 _keys.push(key);
             }
 
@@ -181,6 +190,25 @@ namespace Lehr {
         LinkedList<K> keys() { // copies the keys
             return _keys;
         }
+
+        Map<K, V>* remove(const K& key) {
+            return operator -(key);
+        };
+        Map<K, V>* operator -(const K& key) {
+            int hash_index = hash(&key);
+            KeyValuePair<K,V>& bucket = table[hash_index];
+            KeyValuePair<K,V>* candidate = &bucket;
+
+            while (candidate->next != nullptr && candidate->key != key) {
+                candidate = candidate->next;
+            }
+            if (candidate->key == key) {
+                candidate->deactivate();
+                _keys.excise(_keys.index(key));
+            }
+
+            return this;
+        };
     protected:
         LinkedList<K> _keys;
     private:
