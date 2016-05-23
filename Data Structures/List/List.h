@@ -38,11 +38,7 @@ namespace Lehr {
 
         virtual List<T>* sort() = 0;
 
-        void clear() {
-            while (size() > 0) {
-                pop();
-            }
-        }
+        virtual void clear() = 0;
 
         void mergesort(size_t left, size_t right, List<T>& stage) {
             size_t index = left;

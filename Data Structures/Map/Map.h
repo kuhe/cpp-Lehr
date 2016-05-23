@@ -33,16 +33,16 @@ namespace Lehr {
             return value;
         }
         void operator =(V& value) {
-            setValue(value);
+            set_value(value);
         }
         void operator =(V* value) {
-            setValue(*value);
+            set_value(*value);
         }
         void operator =(V value) {
-            setValue(value);
+            set_value(value);
         }
         KeyValuePair* next = nullptr;
-        bool isInitialized() {
+        bool is_initialized() {
             return initialized;
         }
         void initialize() {
@@ -52,7 +52,7 @@ namespace Lehr {
             initialized = false;
         }
     private:
-        void setValue(V& value) {
+        void set_value(V &value) {
             initialized = true;
             this->value = value;
         }
@@ -61,7 +61,7 @@ namespace Lehr {
 
     class HashBase {
     public:
-        static int hashString(string key, int size) {
+        static int hash_string(string key, int size) {
             int h = 0;
             for (char& c : key) {
                 h = h << 1 ^ c; // left shift and XOR, if I'm not mistaken
@@ -80,7 +80,7 @@ namespace Lehr {
             std::stringstream ss;
             ss << address;
             name = ss.str();
-            return HashBase::hashString(name, size);
+            return HashBase::hash_string(name, size);
         }
     private:
         int size;
@@ -91,7 +91,7 @@ namespace Lehr {
         Hash(int size = 128) : size(size) {}
         int operator ()(const string* key) {
             string name = *key;
-            return HashBase::hashString(name, size);
+            return HashBase::hash_string(name, size);
         }
     private:
         int size;
@@ -102,7 +102,7 @@ namespace Lehr {
         Hash(int size = 128) : size(size) {}
         int operator ()(const int* key) {
             string name = std::to_string(*key);
-            return HashBase::hashString(name, size);
+            return HashBase::hash_string(name, size);
         }
     private:
         int size;
@@ -136,14 +136,14 @@ namespace Lehr {
             KeyValuePair<K,V>& bucket = table[hash_index];
             KeyValuePair<K,V>* candidate = &bucket;
             do {
-                if (candidate->key == key && candidate->isInitialized()) {
+                if (candidate->key == key && candidate->is_initialized()) {
                     return true;
                 }
                 if (nullptr != candidate->next) {
                     candidate = candidate->next;
                 }
             } while(candidate->next != nullptr);
-            return candidate->key == key && candidate->isInitialized();
+            return candidate->key == key && candidate->is_initialized();
         }
 
         V& operator [](const K& key) {
@@ -153,7 +153,7 @@ namespace Lehr {
 
             do {
                 if (candidate->key == key) {
-                    if (!candidate->isInitialized()) {
+                    if (!candidate->is_initialized()) {
                         _keys.push(key);
                         candidate->initialize();
                     }
@@ -165,7 +165,7 @@ namespace Lehr {
             } while(candidate->next != nullptr);
 
             if (candidate->key != key) {
-                if (candidate->isInitialized()) {
+                if (candidate->is_initialized()) {
                     if (candidate->next == nullptr) {
                         candidate->next = new KeyValuePair<K,V>(key);
                     }

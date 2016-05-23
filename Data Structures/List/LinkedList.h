@@ -47,6 +47,12 @@ namespace Lehr {
         LinkedList<T>* map(function<T(T)> fn);
         LinkedList<T>* filter(function<bool(T)> fn);
 
+        void clear() override {
+            while (size() > 0) {
+                pop();
+            }
+        }
+
         struct iterator;
         iterator begin();
         iterator end();
@@ -232,12 +238,12 @@ namespace Lehr {
 
     template <typename T>
     void LinkedList<T>::pop() {
-        T dummy;
+        T dummy; // todo wasteful
         pop(dummy);
     }
     template <typename T>
     void LinkedList<T>::shift() {
-        T dummy;
+        T dummy; // todo wasteful
         shift(dummy);
     }
     template <typename T>
@@ -394,7 +400,10 @@ namespace Lehr {
     }
     template <typename T>
     typename LinkedList<T>::iterator LinkedList<T>::begin() {
-        return iterator(*head, 0, *this);
+        if (size() > 0) {
+            return iterator(*head, 0, *this);
+        }
+        return end();
     }
     template <typename T>
     typename LinkedList<T>::iterator LinkedList<T>::end() {

@@ -6,11 +6,11 @@
 #include "./BinarySearchTree/_bst_common.h"
 
 namespace Lehr {
-    template <typename T>
+    template <typename T, typename M = double>
     class Node;
-    template <typename T>
+    template <typename T, typename M = double>
     class Edge;
-    template <typename T>
+    template <typename T, typename M = double>
     class Graph;
 }
 

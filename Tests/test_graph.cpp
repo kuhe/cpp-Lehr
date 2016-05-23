@@ -9,17 +9,16 @@ int test_graph() {
     {
         Graph<int> graph;
         Node<int> n1, n2, n3, n4, n5;
-        Edge<int> edge(&n1, &n4);
 
         graph.addEdge(&n1, &n2);
-        graph.addEdge(&edge);
+        graph.addEdge(&n1, &n4);
         graph.addNode(&n5);
 
-        graph.connect(&n1, &n3);
+        graph.addEdge(&n1, &n3);
 
         bool test1 = n1.adjacent(&n2);
         bool test2 = n2.adjacent(&n1);
-        bool test3 = n1.adjacent(&edge);
+        bool test3 = n1.adjacent(n1.edge_to(&n4));
         bool test4 = n3.adjacent(&n1);
         bool test5 = n4.adjacent(&n1);
         bool test6 = !n4.adjacent(&n2);
@@ -94,6 +93,12 @@ int test_graph() {
 
         auto path = graph.A_star(*nodes[11], *nodes[66], heuristic);
         console_test(path.size() >= 10 && path.size() <= 12);
+
+        console_test(nodes[11]->distance(nodes[12]), 1);
+        console_test(nodes[12]->distance(nodes[22]), 1);
+
+        auto path2 = graph.path(*nodes[11], *nodes[66]);
+        console_test(path2.size(), 10);
     }
 
     cout << endl;

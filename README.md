@@ -18,7 +18,6 @@ todo:
 
     Todo
         initializer list for List construction
-        Dijkstra and A* on graphs
         BRTRee, BST balancing
         copy-and-swap idiom
         weak smart pointers
@@ -28,6 +27,7 @@ todo:
     Cleanup
         stack allocation of ArrayList (no constructor call?) results in faulty delete in destructor
         How do you use an arbitrary object as a Map key? What if it has no serialization method?
+        Add sortable detection to ArrayList type
 
     Horizon
         see 23.2 Container Requirements, refactor to meet requirements
@@ -40,6 +40,7 @@ Currently implemented (approximate corresponding Java/C++ library class):
     Map (HashMap/unordered_map)
     Set (HashSet/unordered_set)
     Graph (/)
+        + Dijkstra & A*
     BinarySearchTree (TreeMap/map)
     UniquePointer (/unique_ptr)
     SharedPointer (/shared_ptr)

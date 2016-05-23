@@ -7,51 +7,35 @@ using Lehr::Node; // redundant, but to correct an IDE resolution failure
 using Lehr::Edge; // redundant, but to correct an IDE resolution failure
 
 namespace Lehr {
-    template <typename T>
+    template <typename T, typename M>
     class Graph {
     protected:
         Set<Node<T>*> nodes;
         Set<Edge<T>*> edges;
     public:
+        ~Graph() {
+            for (auto ptr : edges.values()) {
+                delete ptr;
+            }
+        }
+        typedef M distance_type;
+        typedef T node_type;
         Graph& addNode(Node<T>* node) {
             if (!nodes.contains(node)) {
                 nodes.add(node);
             }
             return *this;
         }
-        Graph& connect(Node<T>* a, Node<T>* b) {
-            if (!a->adjacent(b)) {
-                Edge<T> edge(a, b);
-                a->connect(&edge);
-            }
-            return *this;
-        }
-        Edge<T> addEdge(Node<T>* a, Node<T>* b, int edgeWeight=0) {
-            if (!nodes.contains(a)) {
-                nodes.add(a);
-            }
-            if (!nodes.contains(b)) {
-                nodes.add(b);
-            }
-            Edge<T> edge(a, b);
-            edge.weight = edgeWeight;
-            edges.add(&edge);
-            return edge;
-        }
-        Graph& addEdge(Edge<T>* edge) {
-            Node<T>* a, * b;
-            a = edge->left;
-            b = edge->right;
-            if (!nodes.contains(a)) {
-                nodes.add(a);
-            }
-            if (!nodes.contains(b)) {
-                nodes.add(b);
-            }
-            if (!edges.contains(edge)) {
+        Edge<T>* addEdge(Node<T>* a, Node<T>* b, M edgeWeight = 1) {
+            addNode(a);
+            addNode(b);
+            auto existing_connection = a->edge_to(b);
+            if (existing_connection == nullptr) {
+                Edge<T>* edge = new Edge<T>(a, b, edgeWeight);
                 edges.add(edge);
+                return edge;
             }
-            return *this;
+            return existing_connection;
         }
         bool contains(Node<T>* node) {
             return nodes.contains(node);

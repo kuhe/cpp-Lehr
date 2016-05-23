@@ -4,31 +4,30 @@
 #include "_graph_common.h"
 
 namespace Lehr {
-    template <typename T>
+    template <typename T, typename M>
     class Edge {
     public:
-        double weight = 1.0;
+        M weight = 1;
         enum flow { BOTH, LEFT, RIGHT };
         flow direction = BOTH;
 
         Node<T>* left;
         Node<T>* right;
-        Edge(Node<T>* l, Node<T>* r) {
+
+        Edge() = delete;
+
+        Edge(Node<T>* l, Node<T>* r, M weight = 1) : weight(weight) {
             left = l;
             right = r;
             l->connect(this);
+            l->connect(r);
             r->connect(this);
-        }
-        Edge(T* l, T* r) {
-            Node<T> a, b;
-            a = *l;
-            b = *r;
-            Edge(&a, &b); // C++11 constructor delegation
+            r->connect(l);
         }
 
         Node<T>* other(Node<T>* node) {
             if (contains(node)) {
-                if (*left == *node) {
+                if (left == node) {
                     return right;
                 }
                 return left;

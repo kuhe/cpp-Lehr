@@ -48,10 +48,12 @@ namespace Lehr {
         ArrayList<T>* map(function<T(T)> fn);
         ArrayList<T>* filter(function<bool(T)> fn);
 
+        void clear() override;
+
         struct iterator;
         iterator begin();
         iterator end();
-        
+
     protected:
         double resize_scalar = 1.5;
         size_t length = 0;
@@ -100,7 +102,9 @@ namespace Lehr {
             }
         protected:
             iterator(size_t from_index, ArrayList<T>& list): index(from_index), _list(list) {
-
+                if (_list.size() == 0) {
+                    index = end;
+                }
             }
             const long int end = -1;
             long int index;
@@ -331,6 +335,10 @@ namespace Lehr {
     template <typename T>
     typename ArrayList<T>::iterator ArrayList<T>::end() {
         return iterator(length, *this);
+    }
+    template<typename T>
+    void ArrayList<T>::clear() {
+        resize(0);
     }
 }
 

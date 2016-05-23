@@ -3,12 +3,13 @@
 #define CPPREF_NODE_H
 
 #include "_graph_common.h"
+#include "Edge.h"
 
 using Lehr::Node; // redundant, but to correct an IDE resolution failure
 using Lehr::Edge; // redundant, but to correct an IDE resolution failure
 
 namespace Lehr {
-    template <typename T>
+    template <typename T, typename M>
     class Node {
     public:
         Node() {}
@@ -19,19 +20,19 @@ namespace Lehr {
         LinkedList<Edge<T>*> edges;
 
         void connect(Edge<T>* edge) {
-            Node<T>* other = edge->other(this);
-            if (!adjacent(other)) {
-                nodes.push(other);
-            }
-            if (!adjacent(edge)) {
-                edges.push(edge);
-            }
+            edges.push(edge);
         }
         void connect(Node<T>* node) {
-            Edge<T> e(this, node);
-            connect(&e);
+            nodes.push(node);
         }
-
+        Edge<T>* edge_to(Node<T>* target) {
+            for (auto ptr : edges) {
+                if (ptr->other(this) == target) {
+                    return ptr;
+                }
+            }
+            return nullptr;
+        }
         bool adjacent(Node<T>* node) {
             return *this == *node || nodes.contains(node);
         }
@@ -40,18 +41,26 @@ namespace Lehr {
         }
         bool connects(Node<T>* node) {
             visited.clear();
-            bool connects = hasConnection(node);
+            bool connects = has_connection(node);
             return connects;
         }
         bool connects(Edge<T>* edge) {
             return connects(edge->left); // the other node is by definition connected.
         }
-
+        M distance(Node<T>* target) {
+            visited.clear();
+            auto connection = edge_to(target);
+            if (nullptr != connection) {
+                return edge_to(target)->weight;
+            }
+            return -1;
+            // todo: find multi-step distance using dijkstra's pathfinder
+        }
         bool operator == (const Node& node) {
             return this == &node;
         }
-        bool operator == (T const& item) {
-            return this->item == &item;
+        bool operator == (const T& item) {
+            return this->item == item;
         }
         void operator = (T value) {
             item = value;
@@ -63,11 +72,11 @@ namespace Lehr {
         /**
          * temporary store for the connection traversal method(s)
          */
-        LinkedList<Node<T>*> visited;
+        ArrayList<Node<T>*> visited;
         /**
          * (potentially multi-step) path exists to the node
          */
-        bool hasConnection(Node<T>* target, Node<T>* origin = nullptr) {
+        bool has_connection(Node<T>* target, Node<T>* origin = nullptr) {
             if (nullptr == origin) {
                 origin = this;
             }
@@ -80,13 +89,14 @@ namespace Lehr {
 
                 if (!already_visited) {
                     visited.push(branch);
-                    connected = hasConnection(target, branch);
+                    connected = has_connection(target, branch);
                     if (connected)
                         return true;
                 }
             }
             return false;
         }
+
     };
 }
 
