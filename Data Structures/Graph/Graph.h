@@ -1,4 +1,3 @@
-
 #ifndef CPPREF_GRAPH_H
 #define CPPREF_GRAPH_H
 

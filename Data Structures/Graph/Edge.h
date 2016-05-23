@@ -1,4 +1,3 @@
-
 #ifndef CPPREF_EDGE_H
 #define CPPREF_EDGE_H
 

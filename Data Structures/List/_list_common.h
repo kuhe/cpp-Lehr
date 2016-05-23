@@ -31,4 +31,6 @@ namespace Lehr {
     class LinkedList;
 }
 
+#include "List.h"
+
 #endif //CPPREF__LIST_COMMON_H

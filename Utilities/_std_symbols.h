@@ -24,7 +24,7 @@ using std::integral_constant;
 
 using std::is_same;
 using std::enable_if;
-
+using std::pair;
 using std::size_t;
 
 using std::vector;

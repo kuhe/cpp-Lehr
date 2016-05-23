@@ -63,7 +63,7 @@ namespace Lehr {
         /**
          * temporary store for the connection traversal method(s)
          */
-        ArrayList<Node<T>*> visited;
+        LinkedList<Node<T>*> visited;
         /**
          * (potentially multi-step) path exists to the node
          */

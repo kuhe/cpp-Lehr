@@ -183,6 +183,15 @@ int test_map() {
         console_test(S.values().contains(B));
     }
 
+    {
+        Set<string> words;
+        words.add("hello");
+        words.add("world");
+        console_test(words.contains("hello"));
+        console_test(words.contains("world"));
+        console_test(!words.contains("blam!"));
+    }
+
     cout << endl;
     return 0;
 };

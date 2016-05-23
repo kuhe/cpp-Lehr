@@ -1,4 +1,3 @@
-#include <math.h>
 #include "test_graph.h"
 
 using Lehr::Graph;

@@ -1,7 +1,7 @@
 #ifndef CPPREF_MAP_H
 #define CPPREF_MAP_H
 
-#include "_map_common.h"
+#include "./_map_common.h"
 
 /*
  * This is a hashmap.

@@ -3,9 +3,8 @@
 
 #include <string>
 #include "../Utilities/_std_symbols.h"
-#include "../Data Structures/Map/Map.h"
-#include "../Data Structures/Set/Set.h"
-#include "./test_common.h"
+#include "../Data Structures/Set/_set_common.h"
+#include "test_common.h"
 
 int test_map();
 

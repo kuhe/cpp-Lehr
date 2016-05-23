@@ -5,7 +5,6 @@
 #include <iostream>
 #include "../Utilities/_std_symbols.h"
 #include "../Data Structures/List/_list_common.h"
-#include "../Data Structures/Graph/_graph_common.h"
 #include "../Data Structures/Graph/BinarySearchTree/_bst_common.h"
 #include "./test_common.h"
 

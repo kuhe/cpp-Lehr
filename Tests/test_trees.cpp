@@ -2,7 +2,6 @@
 #define CPPREF_TEST_TREES_CPP
 
 #include "./test_trees.h"
-#include "../Data Structures/List/ArrayList.h"
 
 using Lehr::BinarySearchTree;
 using Lehr::ArrayList;
