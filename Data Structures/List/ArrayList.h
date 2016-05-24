@@ -291,6 +291,9 @@ namespace Lehr {
 
     template <typename T>
     void ArrayList<T>::resize(size_t n, int start_index) {
+        if (data_size == n && start_index == 0) {
+            return;
+        }
         data_size = n;
         T* transfer = new T[n];
         for (int i = 0; i + start_index < length && i < n; i++) {
@@ -298,6 +301,7 @@ namespace Lehr {
         }
         if (data != nullptr) {
             delete[] data;
+            data = nullptr;
         }
         if (length > n) {
             length = n;

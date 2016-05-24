@@ -50,20 +50,20 @@ int test_graph() {
         Graph<int> graph;
         Map<int, Node<int>*> nodes;
 
-        for (int x = 1; x < 7; x++) {
-            for (int y = 1; y < 7; y++) {
-                int key = x * 10 + y;
-                if (x > 2 && x < 6 && y == 5) {
+        for (int x = 1; x < 16; x++) {
+            for (int y = 1; y < 16; y++) {
+                int key = x * 100 + y;
+                if (x > 7 && x < 13 && y == 12) {
                     continue;
                 }
-                if (y > 2 && y < 6 && x == 5) {
+                if (y > 7 && y < 13 && x == 12) {
                     continue;
                 }
                 Node<int>* node = new Node<int>(key);
                 nodes[key] = node;
 
-                if (x > 1 && nodes.contains(key - 10)) { // connect left
-                    Node<int>* left = nodes[key - 10];
+                if (x > 1 && nodes.contains(key - 100)) { // connect left
+                    Node<int>* left = nodes[key - 100];
                     graph.addEdge(left, node);
                 }
                 if (y > 1 && nodes.contains(key - 1)) { // connect down
@@ -73,32 +73,32 @@ int test_graph() {
             }
         }
 
-        console_test(nodes.keys().size(), 31);
+        console_test(nodes.keys().size(), 216);
 
-        console_test(nodes[11]->connects(nodes[66]));
-        console_test(nodes[66]->connects(nodes[11]));
-        console_test(nodes[61]->connects(nodes[16]));
+        console_test(nodes[ 101]->connects(nodes[1515]));
+        console_test(nodes[1515]->connects(nodes[ 101]));
+        console_test(nodes[1501]->connects(nodes[ 115]));
 
-        console_test(nodes[16]->connects(nodes[11]));
-        console_test(nodes[11]->connects(nodes[61]));
-        console_test(nodes[16]->connects(nodes[61]));
+        console_test(nodes[ 106]->connects(nodes[ 101]));
+        console_test(nodes[ 101]->connects(nodes[1501]));
+        console_test(nodes[ 106]->connects(nodes[1501]));
 
         // decltype(auto) // C++14
         function<double(Node<int>& start, Node<int>& goal)> // C++11
                 heuristic = [](Node<int>& start, Node<int>& goal) -> double {
-            double l = start.item/10 - goal.item/10;
-            double w = start.item%10 - goal.item%10;
+            double l = start.item/100 - goal.item/100;
+            double w = start.item%100 - goal.item%100;
             return sqrt(l * l + w * w);
         };
 
-        auto path = graph.A_star(*nodes[11], *nodes[66], heuristic);
-        console_test(path.size() >= 10 && path.size() <= 12);
+        auto path = graph.A_star(*nodes[ 101], *nodes[1515], heuristic);
+        console_test(path.size() >= 28 && path.size() <= 34);
 
-        console_test(nodes[11]->distance(nodes[12]), 1);
-        console_test(nodes[12]->distance(nodes[22]), 1);
+        console_test(nodes[ 101]->distance(nodes[ 102]), 1);
+        console_test(nodes[ 102]->distance(nodes[ 202]), 1);
 
-        auto path2 = graph.path(*nodes[11], *nodes[66]);
-        console_test(path2.size(), 10);
+        auto path2 = graph.path(*nodes[ 101], *nodes[1515]);
+        console_test(path2.size(), 28);
     }
 
     cout << endl;

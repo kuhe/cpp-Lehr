@@ -181,6 +181,9 @@ int test_lists() {
     {
         LinkedList<int> a, b, c;
         ArrayList<int> d, e, f;
+
+        a.clear();
+        d.clear();
     }
 
     cout << endl;
