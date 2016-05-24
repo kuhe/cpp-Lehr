@@ -69,7 +69,7 @@ namespace Lehr {
                 return operator *();
             }
             T& operator *() {
-                return _list[index];
+                return list[index];
             }
             bool operator ==(iterator& right) {
                 if (index == end) {
@@ -81,7 +81,7 @@ namespace Lehr {
                 return !operator ==(right);
             }
             iterator& operator ++() {
-                if (index < _list.length) {
+                if (index < list.length) {
                     index++;
                 } else {
                     index = end;
@@ -90,7 +90,7 @@ namespace Lehr {
             }
             iterator& operator --() {
                 if (index == end) {
-                    index = _list.length - 1;
+                    index = list.length - 1;
                 } else {
                     if (index > 0) {
                         index--;
@@ -101,14 +101,14 @@ namespace Lehr {
                 return *this;
             }
         protected:
-            iterator(size_t from_index, ArrayList<T>& list): index(from_index), _list(list) {
-                if (_list.size() == 0) {
+            iterator(size_t from_index, ArrayList<T>& list): index(from_index), list(list) {
+                if (list.size() == 0) {
                     index = end;
                 }
             }
             const long int end = -1;
             long int index;
-            ArrayList<T>& _list;
+            ArrayList<T>& list;
         };
     };
 

@@ -110,11 +110,11 @@ namespace Lehr {
             }
             iterator& operator --() {
                 if (index == end) {
-                    cursor = _list.tail;
+                    cursor = list.tail;
                 } else {
                     if (index > 0) {
                         index--;
-                        cursor = _list.node_at(index);
+                        cursor = list.node_at(index);
                     } else {
                         index = end;
                     }
@@ -122,17 +122,17 @@ namespace Lehr {
                 return *this;
             }
         protected:
-            iterator(Node& node, size_t from_index, LinkedList<T>& list): index(from_index), _list(list) {
+            iterator(Node& node, size_t from_index, LinkedList<T>& list): index(from_index), list(list) {
                 cursor = &node;
             }
-            iterator(LinkedList<T>& list): _list(list) {
+            iterator(LinkedList<T>& list): list(list) {
                 index = end;
                 cursor = nullptr;
             }
             const long int end = -1;
             Node* cursor;
             long int index;
-            LinkedList<T>& _list;
+            LinkedList<T>&list;
         };
     };
 

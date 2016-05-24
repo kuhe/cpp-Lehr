@@ -6,6 +6,7 @@
 #include "Tests/test_rule_of_X.h"
 #include "Tests/test_const.h"
 #include "Tests/test_pointers.h"
+#include "Tests/test_threads.h"
 Results results;
 
 int main() {
@@ -37,6 +38,9 @@ int main() {
 
     cout << "Pointer: ";
     int test7 = test_pointers();
+    
+    cout << "threads: ";
+    int test8 = test_threads();
 
     cout << "\nYay! " << (results.score) << " passed. "
          << (results.failed) << " mysterious failure(s)." << endl;

@@ -27,7 +27,7 @@ namespace Lehr {
             bool exists = contains(val);
             entry(val).set();
             if (!exists) {
-                _size++;
+                size_internal++;
             }
             return exists;
         }
@@ -35,7 +35,7 @@ namespace Lehr {
             bool exists = contains(val);
             entry(val).unset();
             if (exists) {
-                _size--;
+                size_internal--;
             }
             return exists;
         }
@@ -49,13 +49,13 @@ namespace Lehr {
             });
         }
         size_t size() {
-            return _size;
+            return size_internal;
         }
         bool empty() {
             return size() == 0;
         }
     protected:
-        size_t _size = 0;
+        size_t size_internal = 0;
         Map<T, Entry<>>* map = new Map<T, Entry<>>();
         Entry<>& entry(const T& val) {
             return (map->operator [](val));

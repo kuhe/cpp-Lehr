@@ -14,6 +14,8 @@ set(SOURCE_FILES
         "Data Structures/Graph/BinarySearchTree/BinarySearchTree.h"
         "Data Structures/Graph/BinarySearchTree/BinarySearchTree.impl.h"
 
+        "Data Structures/Graph/Heap/Heap.h"
+
         "Data Structures/List/_list_common.h"
         "Data Structures/List/ArrayList.h"
         "Data Structures/List/LinkedList.h"
@@ -50,6 +52,8 @@ set(SOURCE_FILES
         Tests/test_rule_of_X.cpp
         Tests/test_trees.h
         Tests/test_trees.cpp
+        Tests/test_threads.h
+        Tests/test_threads.cpp
 
         Utilities/_std_symbols.h
         Utilities/vector_util.h

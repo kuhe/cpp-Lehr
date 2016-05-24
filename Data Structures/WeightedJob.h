@@ -1,5 +1,5 @@
-#ifndef _CPPREF_WEIGHTEDJOB_H_
-#define _CPPREF_WEIGHTEDJOB_H_
+#ifndef CPPREF_WEIGHTEDJOB_H
+#define CPPREF_WEIGHTEDJOB_H
 
 #include <string>
 
@@ -22,4 +22,4 @@ public:
     double getPriority() const;
 };
 
-#endif //_CPPREF_WEIGHTEDJOB_H_
+#endif //CPPREF_WEIGHTEDJOB_H

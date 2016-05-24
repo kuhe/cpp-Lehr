@@ -154,7 +154,7 @@ namespace Lehr {
             do {
                 if (candidate->key == key) {
                     if (!candidate->is_initialized()) {
-                        _keys.push(key);
+                        key_list.push(key);
                         candidate->initialize();
                     }
                     break;
@@ -174,7 +174,7 @@ namespace Lehr {
                     candidate->initialize();
                 }
                 candidate->key = key;
-                _keys.push(key);
+                key_list.push(key);
             }
 
             return candidate->value;
@@ -188,7 +188,7 @@ namespace Lehr {
             return h(key);
         }
         LinkedList<K> keys() { // copies the keys
-            return _keys;
+            return key_list;
         }
 
         Map<K, V>* remove(const K& key) {
@@ -204,13 +204,13 @@ namespace Lehr {
             }
             if (candidate->key == key) {
                 candidate->deactivate();
-                _keys.excise(_keys.index(key));
+                key_list.excise(key_list.index(key));
             }
 
             return this;
         };
     protected:
-        LinkedList<K> _keys;
+        LinkedList<K> key_list;
     private:
         int tableSize = 128;
         KeyValuePair<K,V>* table;
