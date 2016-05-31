@@ -35,6 +35,7 @@ set(SOURCE_FILES
         "Data Structures/WeightedJob.h"
         "Data Structures/WeightedJob.cpp"
 
+        Tests/_all_tests.h
         Tests/test_common.h
         Tests/test_const.h
         Tests/test_const.cpp

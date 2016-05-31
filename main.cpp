@@ -1,12 +1,5 @@
 #include <iostream>
-#include "Tests/test_lists.h"
-#include "Tests/test_map.h"
-#include "Tests/test_graph.h"
-#include "Tests/test_trees.h"
-#include "Tests/test_rule_of_X.h"
-#include "Tests/test_const.h"
-#include "Tests/test_pointers.h"
-#include "Tests/test_threads.h"
+#include "Tests/_all_tests.h"
 Results results;
 
 int main() {
@@ -14,12 +7,12 @@ int main() {
     cout << "Hello, World!" << endl << endl;
 
     cout << "List: ";
-    using al_str = Lehr::ArrayList<string>;
-    using al_int = Lehr::ArrayList<int>;
-    int test = test_lists<al_str, al_int>();
-    using ll_str = Lehr::LinkedList<string>;
-    using ll_int = Lehr::LinkedList<int>;
-    test = test_lists<ll_str, ll_int>();
+    using ArrayListString = Lehr::ArrayList<string>;
+    using ArrayListInt = Lehr::ArrayList<int>;
+    int test = test_lists<ArrayListString, ArrayListInt>();
+    using LinkedListString = Lehr::LinkedList<string>;
+    using LinkedListInt = Lehr::LinkedList<int>;
+    test = test_lists<LinkedListString, LinkedListInt>();
 
     cout << "Map: ";
     int test2 = test_map();
