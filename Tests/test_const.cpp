@@ -1,6 +1,9 @@
 #include "test_const.h"
 
 
+static int call_from_const = 0;
+static int call_from_dyn = 0;
+
 template<int A, typename T, T B>
 class ThingsInLife {
 public:
@@ -31,8 +34,21 @@ public:
     const T taxes() && {
         return caller_rval;
     }
+    const T taxes() const& {
+        return caller_const;
+    }
+
     const int taxes(const T& tax) {
         return input_const;
+    }
+
+    const int deathAndTaxes() const {
+        call_from_const++;
+        return 30 + A;
+    }
+    int deathAndTaxes() {
+        call_from_dyn++;
+        return (static_cast<const ThingsInLife&>(*this)).deathAndTaxes();
     }
 
 };
@@ -70,6 +86,11 @@ int test_const() {
     things_in_life_type things;
     const things_in_life_type& constants = things;
 
+    console_test(things.deathAndTaxes(), constants.deathAndTaxes());
+
+    console_test(call_from_dyn, 1);
+    console_test(call_from_const, 2);
+    console_test(constants.taxes(), constants.death());
     console_test(things.taxes(), s::caller_lval);
     console_test(std::move(things).taxes(), s::caller_rval);
     console_test(things.death(), s::caller_dynamic);
