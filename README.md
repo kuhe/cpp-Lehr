@@ -14,7 +14,7 @@ dangling pointers, segfaults, the mysterious const keyword, type deduction,
 templates and their meta-programming, and a convenient google search index called "any and all g++ error messages".
 
 
-todo:
+Issues: [https://github.com/kuhe/cpp-Lehr/issues](https://github.com/kuhe/cpp-Lehr/issues)
 
     Todo
         initializer list for List construction
@@ -25,6 +25,7 @@ todo:
         Concurrency
 
     Cleanup
+        detect <thread> support (optional test)
         stack allocation of ArrayList (no constructor call?) results in faulty delete in destructor
         How do you use an arbitrary object as a Map key? What if it has no serialization method?
         Add sortable detection to ArrayList type
@@ -37,13 +38,14 @@ Currently implemented (approximate corresponding Java/C++ library class):
 
     LinkedList (LinkedList/forward_list)
     ArrayList (ArrayList/vector)
+        + Mergesort (virtual)
     Map (HashMap/unordered_map)
     Set (HashSet/unordered_set)
-    Graph (/)
+    Graph (?/?)
         + Dijkstra & A*
     BinarySearchTree (TreeMap/map)
-    UniquePointer (/unique_ptr)
-    SharedPointer (/shared_ptr)
+    UniquePointer (?/unique_ptr)
+    SharedPointer (?/shared_ptr)
 
 
 ### Code Style Notes
