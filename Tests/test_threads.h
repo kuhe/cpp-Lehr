@@ -3,6 +3,7 @@
 
 #include "./test_common.h"
 #include <thread>
+#include <atomic>
 
 int test_threads();
 

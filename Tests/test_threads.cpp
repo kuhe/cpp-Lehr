@@ -1,4 +1,3 @@
-#include <c++/atomic>
 #include "test_threads.h"
 
 using std::thread;
