@@ -38,13 +38,14 @@ Currently implemented (approximate corresponding Java/C++ library class):
 
     LinkedList (LinkedList/forward_list)
     ArrayList (ArrayList/vector)
+        + Mergesort (virtual)
     Map (HashMap/unordered_map)
     Set (HashSet/unordered_set)
-    Graph (/)
+    Graph (?/?)
         + Dijkstra & A*
     BinarySearchTree (TreeMap/map)
-    UniquePointer (/unique_ptr)
-    SharedPointer (/shared_ptr)
+    UniquePointer (?/unique_ptr)
+    SharedPointer (?/shared_ptr)
 
 
 ### Code Style Notes
