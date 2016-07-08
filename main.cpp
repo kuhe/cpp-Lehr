@@ -9,19 +9,19 @@ int main() {
     cout << "List: ";
     using ArrayListString = Lehr::ArrayList<string>;
     using ArrayListInt = Lehr::ArrayList<int>;
-    int test = test_lists<ArrayListString, ArrayListInt>();
+    test_lists<ArrayListString, ArrayListInt>();
     using LinkedListString = Lehr::LinkedList<string>;
     using LinkedListInt = Lehr::LinkedList<int>;
-    test = test_lists<LinkedListString, LinkedListInt>();
+    test_lists<LinkedListString, LinkedListInt>();
 
     cout << "Map: ";
-    int test2 = test_map();
+    test_map();
 
     cout << "Graph: ";
-    int test3 = test_graph();
+    test_graph();
 
     cout << "Tree: ";
-    int test4 = test_trees();
+    test_trees();
 
     cout << "Rule of X: ";
     test_rule_of_X();
@@ -30,10 +30,10 @@ int main() {
     test_const();
 
     cout << "Pointer: ";
-    int test7 = test_pointers();
+    test_pointers();
     
     cout << "threads: ";
-    int test8 = test_threads();
+    test_threads();
 
     cout << "\nYay! " << (results.score) << " passed. "
          << (results.failed) << " mysterious failure(s)." << endl;
