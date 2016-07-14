@@ -17,6 +17,11 @@ namespace Lehr {
         ArrayList<T>();
         ArrayList<T>(T item);
         ArrayList<T>(const ArrayList<T>& copy);
+        ArrayList<T>(std::initializer_list<T> list) {
+            for (auto i : list) {
+                push(i);
+            }
+        }
         ~ArrayList<T>() override;
 
         T& operator [](size_t i) override;

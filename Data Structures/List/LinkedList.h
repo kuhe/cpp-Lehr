@@ -15,6 +15,11 @@ namespace Lehr {
         LinkedList<T>();
         LinkedList<T>(T item);
         LinkedList<T>(const LinkedList<T>& copy);
+        LinkedList<T>(std::initializer_list<T> list) {
+            for (auto i : list) {
+                push(i);
+            }
+        }
         ~LinkedList<T>() override;
 
         T& operator [](size_t i) override;

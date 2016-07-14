@@ -186,6 +186,11 @@ int test_lists() {
         d.clear();
     }
 
+    {
+        int_list my_list({1, 2, 3});
+        console_test(my_list.size(), my_list[2]);
+    }
+
     cout << endl;
     return 0;
 };
