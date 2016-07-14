@@ -2,6 +2,8 @@
 #define CPPREF_TEST_COMMON_H
 
 #include "../Utilities/_std_symbols.h"
+#include <string>
+#include <iostream>
 
 struct Results {
     int score;

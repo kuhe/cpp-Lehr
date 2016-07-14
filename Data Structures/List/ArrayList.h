@@ -10,6 +10,10 @@ using std::array;
 namespace Lehr {
     template <typename T>
     class ArrayList : public List<T> {
+
+        template<typename H>
+        friend class BinaryHeap;
+
     public:
         typedef T value_type;
         size_t size() override;

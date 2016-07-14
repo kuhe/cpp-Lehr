@@ -14,7 +14,7 @@ set(SOURCE_FILES
         "Data Structures/Graph/BinarySearchTree/BinarySearchTree.h"
         "Data Structures/Graph/BinarySearchTree/BinarySearchTree.impl.h"
 
-        "Data Structures/Graph/Heap/Heap.h"
+        "Data Structures/Graph/Heap/BinaryHeap.h"
 
         "Data Structures/List/_list_common.h"
         "Data Structures/List/ArrayList.h"
@@ -63,6 +63,6 @@ set(SOURCE_FILES
         Utilities/string_util.cpp
 
         main.cpp
-)
+        Tests/test_heap.cpp "Tests/test_heap.h")
 
 add_executable(cppRef ${SOURCE_FILES})

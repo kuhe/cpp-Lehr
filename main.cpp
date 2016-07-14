@@ -23,6 +23,9 @@ int main() {
     cout << "Tree: ";
     test_trees();
 
+    cout << "Heap: ";
+    test_heap();
+
     cout << "Rule of X: ";
     test_rule_of_X();
 
