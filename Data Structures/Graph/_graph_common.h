@@ -1,6 +1,7 @@
 #ifndef CPPREF_GRAPH_COMMON_H_H
 #define CPPREF_GRAPH_COMMON_H_H
 
+#include "../../Utilities/_std_symbols.h"
 #include "../List/LinkedList.h"
 #include "../Set/_set_common.h"
 #include "./BinarySearchTree/_bst_common.h"

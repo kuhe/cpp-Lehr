@@ -67,10 +67,10 @@ namespace Lehr {
         double resize_scalar = 1.5;
         size_t length = 0;
         T* data = nullptr;
-        void resize(size_t n, int start_index = 0);
         size_t data_size = 0;
         
     public:
+        void resize(size_t n, int start_index = 0);
         struct iterator {
             friend class ArrayList<T>;
 

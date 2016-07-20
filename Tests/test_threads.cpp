@@ -1,10 +1,13 @@
 #include "test_threads.h"
 
-using std::thread;
-using std::move;
-using std::atomic;
-
 int test_threads() {
+
+#ifndef CPPREF__LEHR_THREADS
+#define CPPREF__LEHR_THREADS
+
+    using std::thread;
+    using std::move;
+    using std::atomic;
 
     int a = 0;
     atomic<int> b;
@@ -35,6 +38,13 @@ int test_threads() {
     console_test(a != 0); // though there is a chance a could be 0...
     console_test(b.load(), 0);
 
+#endif //CPPREF__LEHR_THREADS
+
+#ifdef CPPREF__LEHR_THREADS
+    cout << "no threads.. what is this, GCC on windows?";
+#endif
+
     cout << endl;
     return 0;
+
 };

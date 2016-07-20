@@ -6,15 +6,22 @@
 #include <iostream>
 #include <type_traits>
 
-#if defined(_WIN32)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 
 #include <stdint.h>
 #include <functional>
+#include <cstdint>
+#include <climits>
 
 typedef uint8_t u_int8_t;
 typedef uint16_t u_int16_t;
 typedef uint32_t u_int32_t;
 
+#ifndef CPPREF__LEHR_THREADS
+#define CPPREF__LEHR_THREADS
+#endif //CPPREF__LEHR_THREADS
+
+#else
 #endif
 
 using std::true_type;
