@@ -2,6 +2,10 @@
 
 int test_threads() {
 
+#ifdef CPPREF__LEHR_THREADS
+    cout << "no threads.. what is this, GCC on windows?";
+#endif
+
 #ifndef CPPREF__LEHR_THREADS
 #define CPPREF__LEHR_THREADS
 
@@ -39,10 +43,6 @@ int test_threads() {
     console_test(b.load(), 0);
 
 #endif //CPPREF__LEHR_THREADS
-
-#ifdef CPPREF__LEHR_THREADS
-    cout << "no threads.. what is this, GCC on windows?";
-#endif
 
     cout << endl;
     return 0;
