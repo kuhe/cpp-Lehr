@@ -63,6 +63,6 @@ set(SOURCE_FILES
         Utilities/string_util.cpp
 
         main.cpp
-        Tests/test_heap.cpp "Tests/test_heap.h")
+        Tests/test_heap.cpp "Tests/test_heap.h" Tests/_run_all.cpp Tests/_run_all.h)
 
 add_executable(cppRef ${SOURCE_FILES})
