@@ -191,6 +191,19 @@ int test_lists() {
         console_test(my_list.size(), my_list[2]);
     }
 
+    // construction and destruction
+
+    { int_list ilist; }
+    { int_list ilist(1); }
+    {
+        int_list copy;
+        int_list ilist(copy);
+    }
+    { int_list ilist({1,2,3}); }
+    {
+        Lehr::SharedPointer<int_list>(new int_list({1,2,3}));
+    }
+
     cout << endl;
     return 0;
 };
