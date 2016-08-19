@@ -40,6 +40,9 @@ namespace Lehr {
         cout << "threads: ";
         test_threads();
 
+        cout << "template meta-programming: ";
+        test_tmp();
+
         cout << "\nYay! " << (results.score) << " passed. "
         << (results.failed) << " mysterious failure(s)." << endl;
 

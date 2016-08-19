@@ -10,6 +10,7 @@
 #include "test_const.h"
 #include "test_pointers.h"
 #include "test_threads.h"
+#include "test_tmp.h"
 
 
 #endif //CPPREF_ALL_TESTS_H

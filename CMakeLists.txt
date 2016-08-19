@@ -35,7 +35,6 @@ set(SOURCE_FILES
         "Data Structures/WeightedJob.h"
         "Data Structures/WeightedJob.cpp"
 
-        Tests/_all_tests.h
         Tests/test_common.h
         Tests/test_const.h
         Tests/test_const.cpp
@@ -55,6 +54,13 @@ set(SOURCE_FILES
         Tests/test_trees.cpp
         Tests/test_threads.h
         Tests/test_threads.cpp
+        Tests/test_heap.cpp
+        Tests/test_heap.h
+        Tests/test_tmp.cpp
+        Tests/test_tmp.h
+        Tests/_all_tests.h
+        Tests/_run_all.cpp
+        Tests/_run_all.h
 
         Utilities/_std_symbols.h
         Utilities/vector_util.h
@@ -63,6 +69,6 @@ set(SOURCE_FILES
         Utilities/string_util.cpp
 
         main.cpp
-        Tests/test_heap.cpp "Tests/test_heap.h" Tests/_run_all.cpp Tests/_run_all.h)
+        )
 
 add_executable(cppRef ${SOURCE_FILES})
