@@ -2,6 +2,7 @@
 #define CPPREF__STD_SYMBOLS_H
 
 #include <vector>
+#include <list>
 #include <string>
 #include <iostream>
 #include <type_traits>
@@ -37,6 +38,7 @@ using std::pair;
 using std::size_t;
 
 using std::vector;
+using std::list;
 using std::string;
 using std::to_string;
 using std::stoi;

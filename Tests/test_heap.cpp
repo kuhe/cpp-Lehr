@@ -38,6 +38,29 @@ int test_heap() {
         console_test(h.children(10).second, 22);
         console_test(h.children(25).first, 51);
         console_test(h.children(25).second, 52);
+
+        console_test(h.parent(52), 25);
+        console_test(h.parent(51), 25);
+        console_test(h.parent(21), 10);
+        console_test(h.parent(2), 0);
+
+        list<int> nums = { 10498, 10925, 9582, 81723, 7162, 5032, 951, 851, 731, 321, 296, 45, 19, 9, 1 };
+
+        for (auto n : nums) {
+            h.push(n);
+        }
+        nums.sort();
+
+        while (!h.empty() && !nums.empty()) {
+
+            int next = nums.front();
+            nums.pop_front();
+
+            console_test(h.peek(), next);
+
+            h.pop();
+        }
+
     }
 
     cout << endl;

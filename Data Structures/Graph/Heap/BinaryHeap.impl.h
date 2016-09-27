@@ -10,25 +10,101 @@ namespace Lehr {
     BinaryHeap<T>::BinaryHeap() {}
 
     template<typename T>
-    BinaryHeap<T>& BinaryHeap<T>::push(T &item) {
-        // todo
+    BinaryHeap<T>& BinaryHeap<T>::push(T& item) {
+
+        auto depth = depth_of(last_);
+        auto insertion_index = empty() ? 0 : last_ + 1;
+
+        if (data_.size() < insertion_index - 1) {
+            resize(data_.size() * 2);
+        }
+
+        data_[insertion_index] = item;
+        ++size_;
+        if (!empty()) ++last_;
+        empty_ = false;
+
+        size_t item_ix = insertion_index;
+        size_t parent_ix = parent(item_ix);
+
+        while (!comparator(data_[parent_ix], data_[item_ix])) {
+
+            std::swap(data_[item_ix], data_[parent_ix]);
+
+            item_ix = parent_ix;
+            if (item_ix <= 0) {
+                break;
+            }
+            parent_ix = parent(item_ix);
+
+        }
+
         return *this;
     }
 
     template<typename T>
-    T* BinaryHeap<T>::peek() {
-        return root;
+    T& BinaryHeap<T>::peek() {
+        return data_[0];
     }
 
     template<typename T>
     BinaryHeap<T>& BinaryHeap<T>::pop() {
-        // todo
+        if (!empty()) {
+
+            T& last_item = data_[last_];
+            data_[0] = last_item;
+            data_.pop();
+
+            --last_;
+            --size_;
+
+            if (size() == 0) {
+                size_ = 0;
+                empty_ = true;
+                last_ = 0;
+                return *this;
+            }
+
+            size_t cursor = 0;
+            auto branches = children(cursor);
+
+            while (!comparator(data_[cursor], data_[branches.first]) || !comparator(data_[cursor], data_[branches.second])) {
+
+                size_t comparably_better;
+                if (comparator(data_[branches.first], data_[branches.second])) {
+                    comparably_better = branches.first;
+                } else {
+                    comparably_better = branches.second;
+                }
+
+                std::swap(data_[cursor], data_[comparably_better]);
+
+                cursor = comparably_better;
+                branches = children(cursor);
+
+                if (branches.first > last_ || branches.second > last_) {
+                    break;
+                }
+
+            }
+
+        }
         return *this;
     }
 
     template<typename T>
     void BinaryHeap<T>::resize(size_t n) {
-        data.resize(n);
+        data_.resize(n);
+    }
+
+    template<typename T>
+    size_t BinaryHeap<T>::size() {
+        return size_;
+    }
+
+    template<typename T>
+    bool BinaryHeap<T>::empty() {
+        return empty_;
     }
 
     template<typename T>
@@ -73,6 +149,15 @@ namespace Lehr {
         auto fold = parent * 2;
 
         return make_pair(fold + 1, fold + 2);
+    }
+
+    template<typename T>
+    size_t BinaryHeap<T>::parent(size_t child) {
+
+        if (child <= 2) return 0;
+
+        return (child - 1) / 2;
+
     }
 
 }
