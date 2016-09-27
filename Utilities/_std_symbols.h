@@ -24,6 +24,8 @@ typedef uint32_t u_int32_t;
 #else
 #endif
 
+using std::make_pair;
+
 using std::true_type;
 using std::false_type;
 

@@ -29,6 +29,15 @@ int test_heap() {
         console_test(h.index_of(8), 127);
         console_test(h.index_of(12), 2047);
         console_test(h.index_of(16), 32767);
+
+        console_test(h.children(0).first, 1);
+        console_test(h.children(0).second, 2);
+        console_test(h.children(6).first, 13);
+        console_test(h.children(6).second, 14);
+        console_test(h.children(10).first, 21);
+        console_test(h.children(10).second, 22);
+        console_test(h.children(25).first, 51);
+        console_test(h.children(25).second, 52);
     }
 
     cout << endl;
