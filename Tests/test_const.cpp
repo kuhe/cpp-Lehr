@@ -14,7 +14,14 @@ public:
     const T sum = template_meta_programming;
 
     enum states : T {
-        caller_const, caller_dynamic, caller_lval, caller_rval, input_const, static_input_const,
+        caller_const,
+        caller_dynamic,
+        caller_lval,
+        caller_rval,
+        caller_const_ref,
+        caller_const_rval_ref,
+        input_const,
+        static_input_const,
         template_meta_programming = A + B
     };
 
@@ -35,7 +42,10 @@ public:
         return caller_rval;
     }
     const T taxes() const& {
-        return caller_const;
+        return caller_const_ref;
+    }
+    const T taxes() const&& {
+        return caller_const_rval_ref;
     }
 
     const int taxes(const T& tax) {
@@ -84,19 +94,25 @@ int test_const() {
     using s = ThingsInLife<7, number_type, 9>::states;
 
     things_in_life_type things;
-    const things_in_life_type& constants = things;
+    const things_in_life_type const_copy = things;
+    const things_in_life_type& const_ref = things;
 
-    console_test(things.deathAndTaxes(), constants.deathAndTaxes());
+    console_test(things.deathAndTaxes(), const_copy.deathAndTaxes());
 
     console_test(call_from_dyn, 1);
     console_test(call_from_const, 2);
-    console_test(constants.taxes(), constants.death());
+
+    console_test(things.death(), s::caller_dynamic);
+    console_test(const_ref.death(), s::caller_const);
+    console_test(const_copy.death(), s::caller_const);
+    console_test(things_in_life_type::death(100), s::static_input_const);
+
     console_test(things.taxes(), s::caller_lval);
     console_test(std::move(things).taxes(), s::caller_rval);
-    console_test(things.death(), s::caller_dynamic);
-    console_test(constants.death(), s::caller_const);
+    console_test(const_ref.taxes(), s::caller_const_ref);
+    console_test(move(const_ref).taxes(), s::caller_const_rval_ref);
+
     console_test(things.taxes(100), s::input_const);
-    console_test(things_in_life_type::death(100), s::static_input_const);
     console_test(things.sum, s::template_meta_programming);
 
     cout << endl;

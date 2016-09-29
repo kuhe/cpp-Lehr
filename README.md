@@ -17,18 +17,11 @@ templates and their meta-programming, and a convenient google search index calle
 Issues: [https://github.com/kuhe/cpp-Lehr/issues](https://github.com/kuhe/cpp-Lehr/issues)
 
     Todo
-        initializer list for List construction
         BRTRee, BST balancing
-        copy-and-swap idiom
         weak smart pointers
-        Heap
-        Concurrency
 
     Cleanup
-        detect <thread> support (optional test)
-        stack allocation of ArrayList (no constructor call?) results in faulty delete in destructor
         How do you use an arbitrary object as a Map key? What if it has no serialization method?
-        Add sortable detection to ArrayList type
 
     Horizon
         see 23.2 Container Requirements, refactor to meet requirements
@@ -44,6 +37,7 @@ Currently implemented (approximate corresponding Java/C++ library class):
     Graph (?/?)
         + Dijkstra & A*
     BinarySearchTree (TreeMap/map)
+    BinaryHeap (PriorityQueue/priority_queue)
     UniquePointer (?/unique_ptr)
     SharedPointer (?/shared_ptr)
 
