@@ -6,6 +6,10 @@
 using std::function;
 
 namespace Lehr {
+
+    /**
+     * See List for interface comments.
+     */
     template <typename T>
     class LinkedList : public List<T> {
     public:
@@ -38,7 +42,8 @@ namespace Lehr {
         bool contains(const T& item) override;
 
         /**
-         * mutation methods
+         * Mutation methods.
+         * Excise removes elements, splice inserts elements, slice takes a sub-list.
          */
         LinkedList<T>* sort() override;
         using List<T>::mergesort;
@@ -243,24 +248,11 @@ namespace Lehr {
 
     template <typename T>
     void LinkedList<T>::pop() {
-        T dummy; // todo wasteful
-        pop(dummy);
-    }
-    template <typename T>
-    void LinkedList<T>::shift() {
-        T dummy; // todo wasteful
-        shift(dummy);
-    }
-    template <typename T>
-    void LinkedList<T>::pop(T& into) {
         if (length <= 0) {
             length = 0;
             tail = nullptr;
             head = nullptr;
         } else {
-            //T copy = tail->item;
-            //into = copy;
-            into = std::move(tail->item);
             delete tail;
             if (length > 1) {
                 LinkedList<T>::Node* new_tail = node_at((int)length - 2);
@@ -274,15 +266,12 @@ namespace Lehr {
         }
     }
     template <typename T>
-    void LinkedList<T>::shift(T& into) {
+    void LinkedList<T>::shift() {
         if (length <= 0) {
             length = 0;
             tail = nullptr;
             head = nullptr;
         } else {
-            //T copy = head->item;
-            //into = copy;
-            into = std::move(head->item);
             if (length == 1) {
                 tail = nullptr;
                 delete head;
@@ -293,6 +282,20 @@ namespace Lehr {
                 delete current_head;
             }
             length--;
+        }
+    }
+    template <typename T>
+    void LinkedList<T>::pop(T& into) {
+        if (length > 0) {
+            std::swap(tail->item, into);
+            pop();
+        }
+    }
+    template <typename T>
+    void LinkedList<T>::shift(T& into) {
+        if (length > 0) {
+            std::swap(head->item, into);
+            shift();
         }
     }
     template <typename T>

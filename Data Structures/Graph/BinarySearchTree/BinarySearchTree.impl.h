@@ -182,20 +182,17 @@ namespace Lehr {
     }
     template<typename K, typename V>
     typename BinarySearchTree<K, V>::BSTNode*& BinarySearchTree<K, V>::node_with(V& val) {
-        return node_with(val, root, nullptr);
-    }
-    template<typename K, typename V>
-    typename BinarySearchTree<K, V>::BSTNode*& BinarySearchTree<K, V>::node_with(V& val, BSTNode*& context, BSTNode* parent) {
-        if (nullptr == context) {
+        using node = typename BinarySearchTree<K, V>::BSTNode;
+        ArrayList<node*>& members = begin().members;
 
-        } else {
-            if (context->value > val) {
-                return node_with(val, context->left, context);
-            } else if (context->value < val) {
-                return node_with(val, context->right, context);
+        for (auto& node_pointer : members) {
+            if (node_pointer->value == val) {
+                return node_pointer;
             }
         }
-        return context;
+
+        node* typed_null_ptr = nullptr;
+        return typed_null_ptr;
     }
     template<typename K, typename V>
     V& BinarySearchTree<K, V>::get(K key) {

@@ -8,6 +8,10 @@
 using std::array;
 
 namespace Lehr {
+
+    /**
+     * See List for interface comments.
+     */
     template <typename T>
     class ArrayList : public List<T> {
 
@@ -44,7 +48,8 @@ namespace Lehr {
         bool contains(const T& item) override;
 
         /**
-         * mutation methods
+         * Mutation methods.
+         * Excise removes elements, splice inserts elements, slice takes a sub-list.
          */
         ArrayList<T>* sort() override;
         using List<T>::mergesort;
@@ -196,19 +201,15 @@ namespace Lehr {
     void ArrayList<T>::pop(T& into) {
         if (length > 0) {
             size_t index = length - 1;
-            //  T copy = data[index];
-            // into = copy;
-            into = std::move(data[index]);
-            length--;
+            std::swap(into, this->operator[](index));
+            pop();
         }
     }
     template <typename T>
     void ArrayList<T>::shift(T& into) {
         if (length > 0) {
-            //T copy = data[0];
-            //into = copy;
-            into = std::move(data[0]);
-            resize(length - 1, 1);
+            std::swap(into, this->operator[](0));
+            shift();
         }
     }
     template <typename T>

@@ -7,21 +7,39 @@
 
 namespace Lehr {
 
+    /**
+     * A classic binary heap backed by an array.
+     */
     template<typename T>
     class BinaryHeap {
 
     public:
 
+        /**
+         * The default comparator is "less than", i.e. a min-heap.
+         */
         BinaryHeap();
 
+        /**
+         * Satisfying this comparator will place the advantaged lhs item at the top of the heap.
+         */
         BinaryHeap(function<bool(const T& lhs, const T& rhs)> comparator) : comparator(comparator) {};
 
         BinaryHeap& push(T& item);
 
+        /**
+         * A reference to the top item.
+         */
         T& peek();
 
+        /**
+         * Remove the top item.
+         */
         BinaryHeap& pop();
 
+        /**
+         * Reallocate the backing store. This would possibly truncate the structure.
+         */
         void resize(size_t n);
 
         size_t size();

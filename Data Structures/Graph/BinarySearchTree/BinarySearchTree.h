@@ -5,48 +5,104 @@
 
 namespace Lehr {
 
+    /**
+     * A binary search tree that doesn't know how to balance itself.
+     */
     template<typename K, typename V = bool>
     class BinarySearchTree {
     public:
+
+        /**
+         *
+         */
         BinarySearchTree();
+
+        /**
+         * Initialize the root node with a key (value default for that type).
+         */
         BinarySearchTree(K key);
+
+        /**
+         * Initialize with a root node key value pair.
+         */
         BinarySearchTree(K key, V val);
+
         BinarySearchTree(const BinarySearchTree& model);
+
         ~BinarySearchTree();
 
         V& operator [](K key);
         bool contains(K key);
         bool contains_value(V val);
 
-        /** remove all from the given match down */
+        /**
+         * Remove all from the given match down.
+         * Note that the value versions of the next few methods will stop at the first value match when walking
+         * the tree in order.
+         */
         BinarySearchTree* truncate(K key);
         BinarySearchTree* truncate_value(V val);
 
-        /** remove only the match */
+        /**
+         * Remove only the match.
+         */
         BinarySearchTree* excise(K key);
         BinarySearchTree* excise_value(V val);
 
-        /** reform from the subtree starting at the match */
+        /**
+         * Reform the tree (this) from the subtree starting at the match. Mutates.
+         */
         BinarySearchTree* slice(K key);
         BinarySearchTree* slice_value(V val);
 
         K root_key();
+
+        /**
+         * I.e. the height of the tree.
+         */
         size_t depth();
+
         size_t size();
+
+        /**
+         * Not yet implemented.
+         */
         BinarySearchTree* balance();
+
+        /**
+         * (Copy operation)
+         */
         ArrayList<K> keys();
+
         bool empty();
 
+        /**
+         * The left-most non-null leaf node.
+         */
         V* first() {
             return extremity(false);
         }
 
+        /**
+         * The right-most non-null leaf node.
+         */
         V* last() {
             return extremity(true);
         }
 
+        /**
+         * Naively, iterator instantiation on this type of tree initializes an ArrayList of node pointers.
+         */
         struct iterator;
+
+        /**
+         * An iterator keyed at the beginning of the list of nodes.
+         */
         iterator begin();
+
+        /**
+         * An iterator keyed to one past the end of the list of nodes.
+         */
         iterator end();
 
     protected:
@@ -75,7 +131,6 @@ namespace Lehr {
         BSTNode*& node_at(K& key);
         BSTNode*& node_at(K& key, BSTNode*& context, BSTNode* parent);
         BSTNode*& node_with(V& val);
-        BSTNode*& node_with(V& val, BSTNode*& context, BSTNode* parent);
         V& get(K key);
         V& get(K key, BSTNode*& context, BSTNode* parent = nullptr);
         struct BSTNode {

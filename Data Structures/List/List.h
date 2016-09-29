@@ -19,27 +19,64 @@ namespace Lehr {
 
         virtual T& operator[](size_t i) = 0;
 
+        /**
+         * Inserts a copy of item at the end.
+         */
         virtual List<T>* push(T item) = 0;
+
+        /**
+         * Inserts a copy of [item] at the beginning.
+         */
         virtual List<T>* unshift(T item) = 0;
 
+        /**
+         * Remove and delete the last item.
+         */
         virtual void pop() = 0;
+
+        /**
+         * Remove and delete the first item.
+         */
         virtual void shift() = 0;
+
+        /**
+         * Uh, should be swapping the last item into the provided reference.
+         */
         virtual void pop(T& into) = 0;
+
+        /**
+         * Ideally speaking, swaps the first item into the provided reference.
+         */
         virtual void shift(T& into) = 0;
+
         virtual void operator >>(T& into) {
             pop(into);
         }
+
         virtual void operator <<(T& into) {
             shift(into);
         }
 
+        /**
+         * Index of the item or -1, hence the int type. :\.
+         */
         virtual int index(const T& item) = 0;
+
         virtual bool contains(const T& item) = 0;
 
+        /**
+         * The comparator is less than. Currently no provision for customization.
+         */
         virtual List<T>* sort() = 0;
 
+        /**
+         * Empty the list.
+         */
         virtual void clear() = 0;
 
+        /**
+         * Divide and conquer.
+         */
         void mergesort(size_t left, size_t right, List<T>& stage) {
             size_t index = left;
             size_t segment_length = (right - left);

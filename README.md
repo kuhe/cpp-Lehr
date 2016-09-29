@@ -19,6 +19,7 @@ Issues: [https://github.com/kuhe/cpp-Lehr/issues](https://github.com/kuhe/cpp-Le
     Todo
         BRTRee, BST balancing
         weak smart pointers
+        operator +/- for iterators
 
     Cleanup
         How do you use an arbitrary object as a Map key? What if it has no serialization method?
