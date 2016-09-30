@@ -7,6 +7,7 @@ namespace Lehr {
 
     /**
      * A binary search tree that doesn't know how to balance itself.
+     * RB-Tree implementation sounds like a slog. One of these days.
      */
     template<typename K, typename V = bool>
     class BinarySearchTree {
@@ -150,7 +151,13 @@ namespace Lehr {
                 value = node.value;
             }
             explicit operator K*() const { return key; };
+
+            /**
+             * The value type cast is not provided in case it is the same as K.
+             */
             //explicit operator V*() const { return value; };
+            enum class color { red, black };
+            color color = color::black;
             K key;
             V value;
             BSTNode* parent = nullptr;
