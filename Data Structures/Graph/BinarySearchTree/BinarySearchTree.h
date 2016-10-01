@@ -156,8 +156,6 @@ namespace Lehr {
              * The value type cast is not provided in case it is the same as K.
              */
             //explicit operator V*() const { return value; };
-            enum class color { red, black };
-            color color = color::black;
             K key;
             V value;
             BSTNode* parent = nullptr;

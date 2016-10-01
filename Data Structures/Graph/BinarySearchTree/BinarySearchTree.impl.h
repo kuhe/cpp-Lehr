@@ -183,9 +183,8 @@ namespace Lehr {
     template<typename K, typename V>
     typename BinarySearchTree<K, V>::BSTNode*& BinarySearchTree<K, V>::node_with(V& val) {
         using node = typename BinarySearchTree<K, V>::BSTNode;
-        ArrayList<node*>& members = begin().members;
 
-        for (auto& node_pointer : members) {
+        for (auto& node_pointer : begin().members) {
             if (node_pointer->value == val) {
                 return node_pointer;
             }
