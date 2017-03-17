@@ -5,6 +5,9 @@
 
 namespace Lehr {
 
+    /**
+     * Reference counting shared pointer. The control block preference is on the right side of assignment.
+     */
     template<typename T>
     struct SharedPointer {
         // rule of approximately 5
@@ -53,7 +56,8 @@ namespace Lehr {
             raw_pointer = &item;
         }
         ~SharedPointer() {
-            if (--control_block->references == 0) {
+            // @todo <= is rather dubious
+            if (--control_block->references <= 0) {
                 free();
             }
         }

@@ -86,9 +86,9 @@ int test_pointers() {
         console_test(share_ptr2.weak_count(), 3); // share2 is connected with share1
         {
             console_test(share_ptr1.count(), 2);
-            SharedPointer<Widget> temp = weak_ptr1; // doesn't create a new shared pointer?
-            SharedPointer<Widget> temp2 = weak_ptr1;
-            SharedPointer<Widget> temp3 = weak_ptr1;
+            SharedPointer<Widget> temp = weak_ptr1.lock(); // doesn't create a new shared pointer?
+            SharedPointer<Widget> temp2 = weak_ptr1.lock();
+            SharedPointer<Widget> temp3 = weak_ptr1.lock();
             console_test(share_ptr1.count(), 5);
 
             console_test(temp->id, 15);
@@ -126,28 +126,47 @@ int test_pointers() {
         console_test(wp->id, 16);
 
         {
-            SharedPointer<Widget> sp2 = make_shared_pointer<Widget>(12);
-            console_test(sp2.weak_count(), 0);
-            console_test(sp2.count(), 1); // shared pointer is initialized
-            console_test(sp.weak_count(), 1);
+            SharedPointer<Widget> temp = make_shared_pointer<Widget>(35);
 
-            // reassign wp to sp2
+            {
+                SharedPointer<Widget> sp2 = make_shared_pointer<Widget>(12);
+                console_test(sp2.weak_count(), 0);
+                console_test(sp2.count(), 1); // shared pointer is initialized
+                console_test(sp.weak_count(), 1);
+                console_test(sp2->id, 12);
 
-            console_test(wp.get_shared() == sp);
-            console_test(wp.get_shared() != sp2);
-            wp = sp2;
-            console_test(wp.get_shared() != sp);
-            console_test(wp.get_shared() == sp2);
+                // reassign wp to sp2
+
+                console_test(wp.lock() == sp);
+                console_test(wp.lock() != sp2);
+                wp = sp2;
+                console_test(wp.lock() != sp);
+                console_test(wp.lock() == sp2);
+
+                console_test(sp2.count(), 1);
+                temp = wp.lock(); // new shared widget created from sp2
+                console_test(temp.count(), 2);
+                console_test(sp.weak_count(), 0);
+                console_test(sp2.count(), 2);
+                console_test(sp2->id, 12);
+                console_test(wp != nullptr);
+                // sp2 deallocates
+            }
+
+            console_test(temp.count(), 1); // temp remains as only holder of what sp2 held
+            console_test(temp.weak_count(), 1);
+            console_test(temp->id, 12);
 
             console_test(sp.weak_count(), 0);
-            console_test(sp2.weak_count(), 1);
-            console_test(sp2->id, 12);
-            console_test(wp != nullptr);
-            // sp2 deallocates
+            console_test(sp.count(), 1);
+            console_test(wp.lock()->id, 12);
+            console_test(wp->id, 12);
+
+            console_test(wp.lock().count(), 2); // 2 because lock was called twice
+
+            // temp deallocates, weak pointer should now be back to null
         }
 
-        console_test(sp.weak_count(), 0);
-        console_test(sp.count(), 1);
         console_test(wp == nullptr);
 
     }

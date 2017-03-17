@@ -5,6 +5,9 @@
 
 namespace Lehr {
 
+    /**
+     * Assignment to another UniquePointer releases the right hand side.
+     */
     template<typename T>
     struct UniquePointer {
         UniquePointer();

@@ -5,6 +5,9 @@
 
 namespace Lehr {
 
+    /**
+     * A pointer that will work as long as the shared pointer it is assigned to.
+     */
     template<typename T>
     struct WeakPointer {
         WeakPointer() = delete;
@@ -37,10 +40,7 @@ namespace Lehr {
                 --shared->control_block->weak_references;
             }
         }
-        operator SharedPointer<T>() {
-            return *shared;
-        }
-        SharedPointer<T> get_shared() {
+        SharedPointer<T> lock() {
             return *shared;
         }
         T* get() {
@@ -55,10 +55,16 @@ namespace Lehr {
         operator T*() {
             return get();
         }
+        bool operator ==(nullptr_t nil) {
+            return shared->control_block->references == 0;
+        }
+        bool operator !=(nullptr_t nil) {
+            return !operator ==(nil);
+        }
     private:
         SharedPointer<T>* shared = nullptr;
 
-        void reacquire(const SharedPointer<T>& shared_ptr) {
+        void reacquire(SharedPointer<T>& shared_ptr) {
             --shared->control_block->weak_references;
             shared = &shared_ptr;
             ++shared->control_block->weak_references;
