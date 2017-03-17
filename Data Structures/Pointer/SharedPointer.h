@@ -66,10 +66,10 @@ namespace Lehr {
             return !operator ==(nil);
         }
         bool operator ==(T* ptr) {
-            return raw_pointer == ptr;
+            return get() == ptr;
         }
         bool operator !=(T* ptr) {
-            return !operator !=(ptr);
+            return get() != ptr;
         }
         bool operator ==(SharedPointer<T>& shared_ptr) {
             return operator ==(shared_ptr.raw_pointer);
@@ -79,11 +79,13 @@ namespace Lehr {
         }
 
         unsigned long int count() {
-            if (control_block == nullptr) {
-                return 0;
-            }
             return control_block->references;
         }
+
+        unsigned long int weak_count() {
+            return control_block->weak_references;
+        }
+
         T* get() {
             return raw_pointer;
         }
@@ -106,8 +108,8 @@ namespace Lehr {
             }
         }
         void join(SharedPointer<T>& other) {
-            other.control_block->references++;
             control_block = other.control_block;
+            other.control_block->references++;
             raw_pointer = other.raw_pointer;
         }
         void take_unique(UniquePointer<T>& other) {
@@ -126,12 +128,13 @@ namespace Lehr {
             }
         }
     private:
+        friend struct WeakPointer<T>;
         T* raw_pointer = nullptr;
         ControlBlock* control_block = nullptr;
     };
 
-    // EMC++ Item 21
-    template<typename T, typename... R>
+    // emo C++ Item 21
+    template<typename T, typename ...R>
     SharedPointer<T> make_shared_pointer(R&&... ctor_args) {
         return SharedPointer<T>(new T(std::forward<R>(ctor_args)...));
     }

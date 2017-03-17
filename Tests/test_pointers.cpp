@@ -5,24 +5,25 @@
 using std::unordered_map;
 using std::map;
 
-
 int test_pointers() {
 
     struct Widget {
         int id;
         Widget(int i): id(i) {}
+        Widget(const Widget& copy) : id(copy.id) {}
     };
 
     using Lehr::UniquePointer;
+    using Lehr::WeakPointer;
     using Lehr::make_unique_pointer;
 
     UniquePointer<Widget> u_ptr;
     UniquePointer<Widget> u_ptr2;
     UniquePointer<Widget> u_ptr3;
 
-    Widget* volunteer;
-    Widget* volunteer2;
-    Widget* volunteer3;
+    Widget* volunteer = nullptr;
+    Widget* volunteer2 = nullptr;
+    Widget* volunteer3 = nullptr;
     {
         Widget stack_widget(10);
         volunteer = &stack_widget;
@@ -76,6 +77,80 @@ int test_pointers() {
     console_test(share_ptr1->id, 15);
     console_test(share_ptr2->id, 15);
     console_test(share_ptr1.count(), 2); // [made] destroyed in the stack frame above, leaving ptr1 and ptr2
+
+    {
+        WeakPointer<Widget> weak_ptr1 = share_ptr1;
+        WeakPointer<Widget> weak_ptr2 = share_ptr2;
+        WeakPointer<Widget> weak_ptr3 = share_ptr2;
+
+        console_test(share_ptr2.weak_count(), 3); // share2 is connected with share1
+        {
+            console_test(share_ptr1.count(), 2);
+            SharedPointer<Widget> temp = weak_ptr1; // doesn't create a new shared pointer?
+            SharedPointer<Widget> temp2 = weak_ptr1;
+            SharedPointer<Widget> temp3 = weak_ptr1;
+            console_test(share_ptr1.count(), 5);
+
+            console_test(temp->id, 15);
+            console_test(weak_ptr3->id, 15);
+
+            // temporary shared pointers destroyed
+        }
+        console_test(share_ptr2.weak_count(), 3);
+        console_test(share_ptr1.count(), 2);
+
+        // weak pointers destroyed
+    }
+
+    console_test(share_ptr2.weak_count(), 0);
+    console_test(share_ptr1.count(), 2);
+
+    {
+        { // null shared pointer test
+            SharedPointer <Widget> sp;
+            console_test(sp == nullptr);
+            WeakPointer <Widget> wp = sp;
+
+            console_test(sp.count(), 0); // shared pointer is null
+            console_test(sp.weak_count(), 1);
+            console_test(wp == nullptr);
+        }
+
+        SharedPointer<Widget> sp = make_shared_pointer<Widget>(16); // precedence is given to RHS control block
+        WeakPointer <Widget> wp = sp;
+
+        console_test(sp.count(), 1);
+        console_test(sp.weak_count(), 1);
+        console_test(sp->id, 16);
+        console_test(wp != nullptr);
+        console_test(wp->id, 16);
+
+        {
+            SharedPointer<Widget> sp2 = make_shared_pointer<Widget>(12);
+            console_test(sp2.weak_count(), 0);
+            console_test(sp2.count(), 1); // shared pointer is initialized
+            console_test(sp.weak_count(), 1);
+
+            // reassign wp to sp2
+
+            console_test(wp.get_shared() == sp);
+            console_test(wp.get_shared() != sp2);
+            wp = sp2;
+            console_test(wp.get_shared() != sp);
+            console_test(wp.get_shared() == sp2);
+
+            console_test(sp.weak_count(), 0);
+            console_test(sp2.weak_count(), 1);
+            console_test(sp2->id, 12);
+            console_test(wp != nullptr);
+            // sp2 deallocates
+        }
+
+        console_test(sp.weak_count(), 0);
+        console_test(sp.count(), 1);
+        console_test(wp == nullptr);
+
+    }
 
     cout << endl;
     return 0;

@@ -39,7 +39,7 @@ namespace Lehr {
         T* raw_pointer = nullptr;
     };
 
-    // EMC++ Item 21
+    // emo C++ Item 21
     template<typename T, typename... R>
     UniquePointer<T> make_unique_pointer(R&&... ctor_args) {
         return UniquePointer<T>(new T(std::forward<R>(ctor_args)...));
