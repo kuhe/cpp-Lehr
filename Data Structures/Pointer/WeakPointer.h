@@ -61,6 +61,12 @@ namespace Lehr {
         bool operator !=(nullptr_t nil) {
             return !operator ==(nil);
         }
+        bool operator ==(T* ptr) {
+            return get() == ptr;
+        }
+        bool operator !=(T* ptr) {
+            return get() != ptr;
+        }
     private:
         SharedPointer<T>* shared = nullptr;
 
