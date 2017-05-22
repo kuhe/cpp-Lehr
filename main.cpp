@@ -5,4 +5,6 @@ int main() {
 
     Lehr::run_all_tests();
 
+    return 0;
+
 }
