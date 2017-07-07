@@ -28,6 +28,9 @@ namespace Lehr {
         cout << "Heap: ";
         test_heap();
 
+        cout << "Fenwick Tree: ";
+        test_fenwick();
+
         cout << "Rule of X: ";
         test_rule_of_X();
 
@@ -44,7 +47,7 @@ namespace Lehr {
         test_tmp();
 
         cout << "\nYay! " << (results.score) << " passed. "
-        << (results.failed) << " mysterious failure(s)." << endl;
+             << (results.failed) << " mysterious failure(s)." << endl;
 
         // cin.get();
 

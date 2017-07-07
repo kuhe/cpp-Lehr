@@ -16,6 +16,8 @@ set(SOURCE_FILES
 
         "Data Structures/Graph/Heap/BinaryHeap.h"
 
+        "Data Structures/Graph/FenwickTree/FenwickTree.h"
+
         "Data Structures/List/_list_common.h"
         "Data Structures/List/ArrayList.h"
         "Data Structures/List/LinkedList.h"
@@ -54,10 +56,12 @@ set(SOURCE_FILES
         Tests/test_trees.cpp
         Tests/test_threads.h
         Tests/test_threads.cpp
-        Tests/test_heap.cpp
         Tests/test_heap.h
-        Tests/test_tmp.cpp
+        Tests/test_heap.cpp
+        Tests/test_fenwick.h
+        Tests/test_fenwick.cpp
         Tests/test_tmp.h
+        Tests/test_tmp.cpp
         Tests/_all_tests.h
         Tests/_run_all.cpp
         Tests/_run_all.h

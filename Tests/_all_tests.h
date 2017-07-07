@@ -6,6 +6,7 @@
 #include "test_graph.h"
 #include "test_trees.h"
 #include "test_heap.h"
+#include "test_fenwick.h"
 #include "test_rule_of_X.h"
 #include "test_const.h"
 #include "test_pointers.h"
