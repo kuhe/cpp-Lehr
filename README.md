@@ -18,7 +18,6 @@ Issues: [https://github.com/kuhe/cpp-Lehr/issues](https://github.com/kuhe/cpp-Le
 
     Todo
         BRTRee, BST balancing
-        weak smart pointers
         operator +/- for iterators
 
     Cleanup
@@ -38,6 +37,7 @@ Currently implemented (approximate corresponding Java/C++ library class):
     Graph (?/?)
         + Dijkstra & A*
     BinarySearchTree (TreeMap/map)
+    FenwickTree (?/?)
     BinaryHeap (PriorityQueue/priority_queue)
     UniquePointer (?/unique_ptr)
     SharedPointer (?/shared_ptr)
@@ -58,7 +58,7 @@ namespace Lehr {
     class MyCoolClass {
     public:
         int my_cool_method(const int& input);
-    protected:
+    private:
         bool blah;
     }
 }
