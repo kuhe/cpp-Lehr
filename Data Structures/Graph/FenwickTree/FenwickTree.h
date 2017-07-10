@@ -227,7 +227,7 @@ namespace Lehr {
         // very incrementally.
         /*
         unsigned int i = 0;
-        while (number &  (1u << i) == 0) {
+        while ((number &  (1u << i)) == 0) {
             ++i;
         }
         return 1u << i;
