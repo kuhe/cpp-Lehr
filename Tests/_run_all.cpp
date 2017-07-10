@@ -22,7 +22,7 @@ namespace Lehr {
         cout << "Graph: ";
         test_graph();
 
-        cout << "Tree: ";
+        cout << "Binary Search Tree: ";
         test_trees();
 
         cout << "Heap: ";

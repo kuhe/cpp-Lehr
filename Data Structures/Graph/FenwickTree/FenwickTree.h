@@ -11,9 +11,6 @@ namespace Lehr {
      * and calculate prefix sums in a table of numbers. This structure was proposed by Peter Fenwick in 1994
      * to improve the efficiency of arithmetic coding compression algorithms."
      *
-     * "...achieved by representing the numbers as a tree, where the value of each node is the sum of the numbers
-     * in that subtree."
-     *
      * @tparam T transitively summable type.
      */
     template<typename T>
@@ -29,6 +26,7 @@ namespace Lehr {
 
         /* rest are default */
         FenwickTree(const size_t size);
+        FenwickTree(const size_t size, const T& base);
         FenwickTree(const FenwickTree<T>& other);
         FenwickTree(const FenwickTree<T>&& other);
         FenwickTree<T>& operator =(const FenwickTree<T>& other);
@@ -39,21 +37,30 @@ namespace Lehr {
          * @param i index.
          * @return the value at index.
          */
-        T& operator [](const size_t i);
+        T operator [](const size_t i);
 
         /**
          * @param i index.
          * @param j index.
          * @return the sum of values between i and j indices, inclusive.
          */
-        T& sum(const size_t i, const size_t j);
+        T sum(size_t i, size_t j);
+
+        /**
+         *
+         * @param i index.
+         * @param j index.
+         * @param base - number to start sum with.
+         * @return
+         */
+        T sum(size_t i, size_t j, T base);
 
         /**
          * @param value - added at index of underlying array.
          * @param i index.
          * @return instance.
          */
-        FenwickTree<T>& add(const T& value, const size_t i);
+        FenwickTree<T>& add(const T& value, size_t i);
 
         /**
          * @param value
@@ -69,8 +76,9 @@ namespace Lehr {
 
     private:
 
-        T* data;
-        const size_t size_;
+        T* data = nullptr;
+        const size_t size_ = 0;
+        T base;
 
         /**
          * @param number
@@ -116,7 +124,12 @@ namespace Lehr {
 
     template<typename T>
     FenwickTree<T>::FenwickTree(const size_t size): size_(size) {
-        data = new T[size];
+        data = new T[size]();
+    }
+
+    template<typename T>
+    FenwickTree<T>::FenwickTree(const size_t size, const T& base): size_(size), base(base) {
+        data = new T[size]();
     }
 
     template<typename T>
@@ -138,15 +151,35 @@ namespace Lehr {
     };
 
     template<typename T>
-    T& FenwickTree<T>::operator [](const size_t i) {
+    T FenwickTree<T>::operator [](const size_t i) {
         return sum(i, i);
     }
 
     template<typename T>
-    T& FenwickTree<T>::sum(size_t i, size_t j) {
-        // inclusive.
-        // @todo
-        return T();
+    T FenwickTree<T>::sum(size_t i, size_t j) {
+        return sum(i, j, base);
+    }
+
+    template<typename T>
+    T FenwickTree<T>::sum(size_t i, size_t j, T base) {
+        // Inclusive.
+        // Take the sum path of j between j and i, and the sum path of i between it and where j terminated.
+
+        j += 1u;
+
+        if (j == 1u) return data[0];
+
+        while (j > i && j != 0u) {
+            base += data[j - 1u];
+            j -= ls1b(j);
+        }
+
+        while (i > j && i != 0u) {
+            base -= data[i - 1u];
+            i -= ls1b(i);
+        }
+
+        return base;
     }
 
     template<typename T>
@@ -154,9 +187,8 @@ namespace Lehr {
         // index i and the roots of each next subtree must add [value].
 
         while (i < size()) {
-            T& cursor = data[i];
-            cursor += value;
-            i += ls1b(i);
+            data[i] += value;
+            i += ls1b(i + 1);
         }
 
         return *this;
@@ -195,10 +227,10 @@ namespace Lehr {
         // very incrementally.
         /*
         unsigned int i = 0;
-        while (number &  (1ul << i) == 0) {
+        while (number &  (1u << i) == 0) {
             ++i;
         }
-        return 1ul << i;
+        return 1u << i;
         */
     }
 
