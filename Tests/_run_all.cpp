@@ -7,6 +7,7 @@ namespace Lehr {
     int run_all_tests() {
 
         cout << "Hello, World!" << endl << endl;
+        cout << __cplusplus << endl << endl;
 
         cout << "List: ";
         using ArrayListString = Lehr::ArrayList<string>;
