@@ -54,8 +54,8 @@ set(SOURCE_FILES
         Tests/test_rule_of_X.cpp
         Tests/test_trees.h
         Tests/test_trees.cpp
-        Tests/test_threads.h
-        Tests/test_threads.cpp
+        Tests/test_concurrency.h
+        Tests/test_concurrency.cpp
         Tests/test_heap.h
         Tests/test_heap.cpp
         Tests/test_fenwick.h

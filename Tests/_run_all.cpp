@@ -7,7 +7,7 @@ namespace Lehr {
     int run_all_tests() {
 
         cout << "Hello, World!" << endl << endl;
-        cout << __cplusplus << endl << endl;
+        cout << "C++ version: " << __cplusplus << endl << endl;
 
         cout << "List: ";
         using ArrayListString = Lehr::ArrayList<string>;
@@ -41,8 +41,8 @@ namespace Lehr {
         cout << "Pointer: ";
         test_pointers();
 
-        cout << "threads: ";
-        test_threads();
+        cout << "concurrency: ";
+        test_concurrency();
 
         cout << "template meta-programming: ";
         test_tmp();

@@ -1,4 +1,4 @@
-#include "test_threads.h"
+#include "test_concurrency.h"
 
 /**
  *
@@ -11,15 +11,24 @@
  *      Lock Guard - automatic safe release of a mutex at the end of a scope.
  *      "Counting Semaphore" - https://en.wikipedia.org/wiki/Semaphore_(programming)
  *
- * Atomic - An atomic value is one that, in basic terms, automatically locks during operations on it.
+ * Atomic - An atomic value is one that, in basic terms, automatically locks (*) during operations on it.
+ *          (*) Note the locking part is dependent on the type of the atomic value.
+ *          Also look into "compare and swap".
+ *
+ * Future/Promise - Future is readonly whereas Promise is writeable (once), according to wikipedia
+ *                  but I'm not clear on what the difference is in C++11 yet.
  *
  * In Java:
  * - "synchronized" methods.
  * - atomicity (same concept)
+ * - Future/CompletableFuture
  *
+ * In JavaScript:
+ * - no multi-threading
+ * - Future: Promise with inaccessible resolve function / Promise with accessible resolve function.
  *
  */
-int test_threads() {
+int test_concurrency() {
 
 #ifdef CPPREF__LEHR_THREADS
     cout << "no threads.. what is this, GCC on windows?";
@@ -33,6 +42,8 @@ int test_threads() {
     using std::atomic;
     using std::lock_guard;
     using std::mutex;
+    using std::future;
+    using std::promise;
 
     /*
      * a - will be freely accessed by multiple threads.
@@ -57,19 +68,26 @@ int test_threads() {
         c--;
     };
 
-    function<void()> thread1_main = [&]() {
+    function<promise<int>()> thread1_main = [&]() -> promise<int> {
         int n = 9000;
         while (n-- > 0) {
             a++;
+        }
+        while (n++ < 9000) {
             b++;
             increment_c();
         }
+        promise<int> p;
+        p.set_value(12345);
+        return p;
     };
 
     function<void()> thread2_main = [&]() {
         int n = 9000;
         while (n-- > 0) {
             a--;
+        }
+        while (n++ < 9000) {
             b--;
             decrement_c();
         }
@@ -77,7 +95,11 @@ int test_threads() {
 
     thread t1(thread1_main);
     thread t2(thread2_main);
-    thread t3(thread1_main);
+    thread t3([&]() -> void {
+        auto c_promise = thread1_main();
+        const int c = c_promise.get_future().get();
+        console_test(c, 12345);
+    });
     thread t4(thread2_main);
 
     // thread::join means for the spawned thread to join "this" thread (i.e. the main thread)
