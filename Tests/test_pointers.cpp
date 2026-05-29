@@ -26,13 +26,12 @@ int test_pointers() {
         Widget* volunteer2 = nullptr;
         Widget* volunteer3 = nullptr;
 
-        Widget stack_widget(10);
-        volunteer = &stack_widget;
+        volunteer = new Widget(10);
         {
             volunteer2 = new Widget(2);
             u_ptr3 = volunteer2;
-            u_ptr2 = u_ptr3;
-            u_ptr = u_ptr2;
+            u_ptr2 = std::move(u_ptr3);
+            u_ptr = std::move(u_ptr2);
             console_test(u_ptr2 == nullptr);
             console_test(u_ptr3 == nullptr);
             console_test(u_ptr->id, 2);
@@ -41,8 +40,8 @@ int test_pointers() {
             volunteer3 = new Widget(3);
             u_ptr = nullptr;
             u_ptr = volunteer;
+            u_ptr2 = std::move(u_ptr);
             u_ptr = volunteer3;
-            u_ptr2 = volunteer;
             console_test(u_ptr2->id, 10);
             console_test(u_ptr->id, 3);
         }

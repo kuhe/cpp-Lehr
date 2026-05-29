@@ -13,12 +13,11 @@ namespace Lehr {
         UniquePointer();
 //        UniquePointer(T& pointee);
         UniquePointer(T* pointer);
-        UniquePointer(UniquePointer<T>& other);
+        UniquePointer(UniquePointer<T>& other) = delete;
         UniquePointer(UniquePointer<T>&& other);
-        void operator =(UniquePointer<T>& other);
+        void operator =(UniquePointer<T>& other) = delete;
         void operator =(UniquePointer<T>&& other);
-        void operator =(T& item);
-        void operator =(T&& item);
+        void operator =(T* item);
         ~UniquePointer();
 
         bool operator ==(nullptr_t nil);

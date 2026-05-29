@@ -14,15 +14,7 @@ namespace Lehr {
         raw_pointer = pointer;
     };
     template<typename T>
-    UniquePointer<T>::UniquePointer(UniquePointer<T>& other) {
-        take_over(other);
-    };
-    template<typename T>
     UniquePointer<T>::UniquePointer(UniquePointer<T>&& other) {
-        take_over(other);
-    };
-    template<typename T>
-    void UniquePointer<T>::operator =(UniquePointer<T>& other) {
         take_over(other);
     };
     template<typename T>
@@ -31,12 +23,9 @@ namespace Lehr {
     };
 
     template<typename T>
-    void UniquePointer<T>::operator =(T& item) {
-        raw_pointer = &item;
-    };
-    template<typename T>
-    void UniquePointer<T>::operator =(T&& item) {
-        raw_pointer = &item;
+    void UniquePointer<T>::operator =(T* ptr) {
+        free();
+        raw_pointer = ptr;
     };
 
     template<typename T>
@@ -81,6 +70,7 @@ namespace Lehr {
     };
     template<typename T>
     void UniquePointer<T>::take_over(UniquePointer<T>& other) {
+        free();
         raw_pointer = other.raw_pointer;
         other.release();
     }
