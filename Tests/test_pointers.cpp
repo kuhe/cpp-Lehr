@@ -108,9 +108,9 @@ int test_pointers() {
 
     {
         { // null shared pointer test
-            SharedPointer <Widget> sp;
+            SharedPointer<Widget> sp;
             console_test(sp == nullptr);
-            WeakPointer <Widget> wp = sp;
+            WeakPointer<Widget> wp = sp;
 
             console_test(sp.count(), 0); // shared pointer is null
             console_test(sp.weak_count(), 1);
@@ -118,7 +118,7 @@ int test_pointers() {
         }
 
         SharedPointer<Widget> sp = make_shared_pointer<Widget>(16); // precedence is given to RHS control block
-        WeakPointer <Widget> wp = sp;
+        WeakPointer<Widget> wp = sp;
 
         console_test(sp.count(), 1);
         console_test(sp.weak_count(), 1);

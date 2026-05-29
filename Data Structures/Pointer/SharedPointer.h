@@ -16,7 +16,7 @@ namespace Lehr {
         };
         SharedPointer(T* pointer) {
             initialize_control();
-            raw_pointer = pointer;
+            control_block->raw_pointer = pointer;
             control_block->references = 1;
         };
         SharedPointer(SharedPointer<T>& other) {
@@ -48,23 +48,20 @@ namespace Lehr {
         void operator =(T& item) {
             initialize_control();
             control_block->references = 1;
-            raw_pointer = &item;
+            control_block->raw_pointer = &item;
         }
         void operator =(T&& item) {
             initialize_control();
             control_block->references = 1;
-            raw_pointer = &item;
+            control_block->raw_pointer = &item;
         }
         ~SharedPointer() {
-            // @todo <= is rather dubious
-            if (--control_block->references <= 0) {
-                free();
-            }
+            free();
         }
 
         // other methods
         bool operator ==(nullptr_t nil) {
-            return raw_pointer == nullptr;
+            return control_block->raw_pointer == nullptr;
         }
         bool operator !=(nullptr_t nil) {
             return !operator ==(nil);
@@ -76,10 +73,10 @@ namespace Lehr {
             return get() != ptr;
         }
         bool operator ==(SharedPointer<T>& shared_ptr) {
-            return operator ==(shared_ptr.raw_pointer);
+            return operator ==(shared_ptr.control_block->raw_pointer);
         }
         bool operator !=(SharedPointer<T>& shared_ptr) {
-            return operator !=(shared_ptr.raw_pointer);
+            return operator !=(shared_ptr.control_block->raw_pointer);
         }
 
         unsigned long int count() {
@@ -91,21 +88,25 @@ namespace Lehr {
         }
 
         T* get() {
-            return raw_pointer;
+            return control_block->raw_pointer;
         }
         T& operator *() {
-            return *raw_pointer;
+            return *control_block->raw_pointer;
         }
         T* operator ->() {
-            return raw_pointer;
+            return control_block->raw_pointer;
         }
     protected:
         struct ControlBlock {
             friend struct SharedPointer<T>;
             ControlBlock() {}
+            T* raw_pointer = nullptr;
             unsigned long int references = 0;
             unsigned long int weak_references = 0;
         };
+        SharedPointer(ControlBlock* cb) : control_block(cb) {
+            ++control_block->references;
+        }
         void initialize_control() {
             if (control_block == nullptr) {
                 control_block = new ControlBlock();
@@ -113,27 +114,30 @@ namespace Lehr {
         }
         void join(SharedPointer<T>& other) {
             control_block = other.control_block;
-            other.control_block->references++;
-            raw_pointer = other.raw_pointer;
+            ++other.control_block->references;
+            control_block->raw_pointer = other.control_block->raw_pointer;
         }
         void take_unique(UniquePointer<T>& other) {
-            raw_pointer = other.raw_pointer;
+            control_block->raw_pointer = other.raw_pointer;
             other.release();
             control_block->references++;
         }
         void free() {
-            if (raw_pointer != nullptr) {
-                delete raw_pointer;
-                raw_pointer = nullptr;
-            }
-            if (control_block != nullptr) {
-                delete control_block;
-                control_block = nullptr;
+            --control_block->references;
+            if (control_block->raw_pointer != nullptr) {
+                if (control_block->references == 0) {
+                    delete control_block->raw_pointer;
+                    control_block->raw_pointer = nullptr;
+
+                    if (control_block->weak_references == 0) {
+                        delete control_block;
+                        control_block = nullptr;
+                    }
+                }
             }
         }
     private:
         friend struct WeakPointer<T>;
-        T* raw_pointer = nullptr;
         ControlBlock* control_block = nullptr;
     };
 

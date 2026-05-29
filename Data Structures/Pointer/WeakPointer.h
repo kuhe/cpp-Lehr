@@ -11,20 +11,20 @@ namespace Lehr {
     template<typename T>
     struct WeakPointer {
         WeakPointer() = delete;
-        WeakPointer(const WeakPointer<T>& copy) : shared(copy.shared) {}
+        WeakPointer(const WeakPointer<T>& copy) : control(copy.control) {}
         WeakPointer& operator =(const WeakPointer<T>& copy) {
-            shared = &copy.shared;
+            control = &copy.control;
             return this;
         }
         WeakPointer& operator =(const WeakPointer<T>&& move) {
-            shared = &move.shared;
+            control = &move.control;
         }
 
-        WeakPointer(SharedPointer<T>& shared_ptr) : shared(&shared_ptr) {
-            ++shared->control_block->weak_references;
+        WeakPointer(SharedPointer<T>& shared_ptr) : control(shared_ptr.control_block) {
+            ++control->weak_references;
         }
-        WeakPointer(SharedPointer<T>&& shared_ptr) : shared(&shared_ptr) {
-            ++shared->control_block->weak_references;
+        WeakPointer(SharedPointer<T>&& shared_ptr) : control(shared_ptr.control_block) {
+            ++control->weak_references;
         }
         WeakPointer& operator =(SharedPointer<T>& shared_ptr) {
             reacquire(shared_ptr);
@@ -36,15 +36,18 @@ namespace Lehr {
         }
 
         ~WeakPointer() {
-            if (shared != nullptr && shared->control_block != nullptr) {
-                --shared->control_block->weak_references;
+            if (control != nullptr) {
+                --control->weak_references;
             }
         }
         SharedPointer<T> lock() {
-            return *shared;
+            if (control->references > 0) {
+                return SharedPointer<T>(control);
+            }
+            return SharedPointer<T>();
         }
         T* get() {
-            return shared->get();
+            return control->raw_pointer;
         }
         T& operator *() {
             return *get();
@@ -56,7 +59,7 @@ namespace Lehr {
             return get();
         }
         bool operator ==(nullptr_t nil) {
-            return shared->control_block->references == 0;
+            return control->references == 0;
         }
         bool operator !=(nullptr_t nil) {
             return !operator ==(nil);
@@ -68,12 +71,12 @@ namespace Lehr {
             return get() != ptr;
         }
     private:
-        SharedPointer<T>* shared = nullptr;
+        typename SharedPointer<T>::ControlBlock* control = nullptr;
 
         void reacquire(SharedPointer<T>& shared_ptr) {
-            --shared->control_block->weak_references;
-            shared = &shared_ptr;
-            ++shared->control_block->weak_references;
+            --control->weak_references;
+            control = shared_ptr.control_block;
+            ++control->weak_references;
         }
 
     };
