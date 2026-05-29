@@ -60,7 +60,7 @@ namespace Lehr {
         ArrayList<T>* slice(int index);
         ArrayList<T>* slice(int index, int length);
         ArrayList<T>* map(function<T(T)> fn);
-        ArrayList<T>* filter(function<bool(T)> fn);
+        ArrayList<T>* filter(function<bool(T&)> fn);
 
         void clear() override;
 
@@ -321,18 +321,17 @@ namespace Lehr {
         data = transfer;
     }
     template <typename T>
-    ArrayList<T>* ArrayList<T>::map(function<T(T)> func) {
+    ArrayList<T>* ArrayList<T>::map(function<T(T)> fn) {
         for (T& item : *this) {
-            item = func(item);
+            item = fn(item);
         }
         return this;
     }
     template <typename T>
-    ArrayList<T>* ArrayList<T>::filter(function<bool(T)> func) {
+    ArrayList<T>* ArrayList<T>::filter(function<bool(T&)> fn) {
         ArrayList<T> temp;
         for (T& item : *this) {
-            bool keep = func(item);
-            if (keep) {
+            if (fn(item)) {
                 temp.push(item);
             }
         }

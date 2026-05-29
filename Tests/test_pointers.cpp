@@ -9,7 +9,7 @@ int test_pointers() {
 
     struct Widget {
         int id;
-        Widget(int i): id(i) {}
+        explicit Widget(const int i): id(i) {}
         Widget(const Widget& copy) : id(copy.id) {}
     };
 
@@ -21,10 +21,11 @@ int test_pointers() {
     UniquePointer<Widget> u_ptr2;
     UniquePointer<Widget> u_ptr3;
 
-    Widget* volunteer = nullptr;
-    Widget* volunteer2 = nullptr;
-    Widget* volunteer3 = nullptr;
     {
+        Widget* volunteer = nullptr;
+        Widget* volunteer2 = nullptr;
+        Widget* volunteer3 = nullptr;
+
         Widget stack_widget(10);
         volunteer = &stack_widget;
         {

@@ -55,7 +55,7 @@ namespace Lehr {
         LinkedList<T>* slice(int index);
         LinkedList<T>* slice(int index, int length);
         LinkedList<T>* map(function<T(T)> fn);
-        LinkedList<T>* filter(function<bool(T)> fn);
+        LinkedList<T>* filter(function<bool(T&)> fn);
 
         void clear() override {
             while (size() > 0) {
@@ -94,16 +94,16 @@ namespace Lehr {
             T& operator ->() {
                 return operator *();
             }
-            T& operator *() {
+            T& operator *() const {
                 return cursor->item;
             }
-            bool operator ==(iterator& right) {
+            bool operator ==(const iterator& right) {
                 if (index == end || right.index == end) {
                     return right.index == index;
                 }
                 return operator *() == *right;
             }
-            bool operator !=(iterator& right) {
+            bool operator !=(const iterator& right) {
                 return !operator ==(right);
             }
             iterator& operator ++() {
@@ -387,18 +387,21 @@ namespace Lehr {
         return this;
     }
     template <typename T>
-    LinkedList<T>* LinkedList<T>::map(function<T(T)> func) {
+    LinkedList<T>* LinkedList<T>::map(function<T(T)> fn) {
         for (T& item : *this) {
-            item = func(item);
+            item = fn(item);
         }
         return this;
     }
     template <typename T>
-    LinkedList<T>* LinkedList<T>::filter(function<bool(T)> func) {
+    LinkedList<T>* LinkedList<T>::filter(function<bool(T&)> fn) {
         int ix = 0;
-        for (T& item : *this) {
-            bool keep = func(item);
-            if (!keep) {
+        auto iterator = begin();
+
+        while (iterator != end()) {
+            T& item = *iterator;
+            ++iterator;
+            if (const bool keep = fn(item); !keep) {
                 excise(ix);
                 ix--;
             }

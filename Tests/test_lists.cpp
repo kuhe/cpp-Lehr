@@ -157,7 +157,7 @@ int test_lists() {
         console_test(number, 2 * values[ix++]);
     }
 
-    numbers.filter([](int n) {
+    numbers.filter([](int& n) {
         return n > 0;
     });
 
