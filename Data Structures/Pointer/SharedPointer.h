@@ -23,13 +23,16 @@ namespace Lehr {
             join(other);
         };
         SharedPointer(SharedPointer<T>&& other) {
-            join(other);
+            control_block = other.control_block;
+            other.control_block = nullptr;
         };
         void operator =(SharedPointer<T>& other) {
             join(other);
         };
         void operator =(SharedPointer<T>&& other) {
-            join(other);
+            free();
+            control_block = other.control_block;
+            other.control_block = nullptr;
         };
 
         SharedPointer(UniquePointer<T>& other) {
@@ -45,16 +48,6 @@ namespace Lehr {
             take_unique(other);
         };
 
-        void operator =(T& item) {
-            initialize_control();
-            control_block->references = 1;
-            control_block->raw_pointer = &item;
-        }
-        void operator =(T&& item) {
-            initialize_control();
-            control_block->references = 1;
-            control_block->raw_pointer = &item;
-        }
         ~SharedPointer() {
             free();
         }
@@ -113,6 +106,10 @@ namespace Lehr {
             }
         }
         void join(SharedPointer<T>& other) {
+            // release own control block.
+            free();
+
+            // take on other's control block.
             control_block = other.control_block;
             ++other.control_block->references;
             control_block->raw_pointer = other.control_block->raw_pointer;
@@ -123,7 +120,12 @@ namespace Lehr {
             control_block->references++;
         }
         void free() {
-            --control_block->references;
+            if (control_block == nullptr) {
+                return;
+            }
+            if (control_block->references > 0) {
+                --control_block->references;
+            }
             if (control_block->raw_pointer != nullptr) {
                 if (control_block->references == 0) {
                     delete control_block->raw_pointer;

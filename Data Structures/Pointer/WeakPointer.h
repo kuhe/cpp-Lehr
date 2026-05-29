@@ -13,11 +13,16 @@ namespace Lehr {
         WeakPointer() = delete;
         WeakPointer(const WeakPointer<T>& copy) : control(copy.control) {}
         WeakPointer& operator =(const WeakPointer<T>& copy) {
-            control = &copy.control;
-            return this;
+            --control->weak_references;
+            control = copy.control;
+            ++control->weak_references;
+            return *this;
         }
         WeakPointer& operator =(const WeakPointer<T>&& move) {
-            control = &move.control;
+            --control->weak_references;
+            control = move.control;
+            ++control->weak_references;
+            return *this;
         }
 
         WeakPointer(SharedPointer<T>& shared_ptr) : control(shared_ptr.control_block) {
