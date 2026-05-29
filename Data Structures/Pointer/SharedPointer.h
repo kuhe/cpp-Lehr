@@ -126,15 +126,16 @@ namespace Lehr {
             if (control_block->references > 0) {
                 --control_block->references;
             }
-            if (control_block->raw_pointer != nullptr) {
-                if (control_block->references == 0) {
+
+            if (control_block->references == 0) {
+                if (control_block->raw_pointer != nullptr) {
                     delete control_block->raw_pointer;
                     control_block->raw_pointer = nullptr;
+                }
 
-                    if (control_block->weak_references == 0) {
-                        delete control_block;
-                        control_block = nullptr;
-                    }
+                if (control_block->weak_references == 0) {
+                    delete control_block;
+                    control_block = nullptr;
                 }
             }
         }

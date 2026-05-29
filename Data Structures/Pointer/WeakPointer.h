@@ -11,7 +11,9 @@ namespace Lehr {
     template<typename T>
     struct WeakPointer {
         WeakPointer() = delete;
-        WeakPointer(const WeakPointer<T>& copy) : control(copy.control) {}
+        WeakPointer(const WeakPointer<T>& copy) : control(copy.control) {
+            ++control->weak_references;
+        }
         WeakPointer& operator =(const WeakPointer<T>& copy) {
             --control->weak_references;
             control = copy.control;
